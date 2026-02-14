@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terapias - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .therapies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .therapy-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+    }
+
+    .therapy-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .therapy-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .therapy-icon {
+      font-size: 2.5rem;
+      color: #9370DB;
+    }
+
+    .therapy-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .therapy-card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-top: 15px;
+    }
+
+    .therapy-benefits {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .therapy-benefits h3 {
+      font-size: 1rem;
+      color: #9370DB;
+      margin-bottom: 10px;
+    }
+
+    .therapy-benefits ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .therapy-benefits li {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 5px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .therapy-benefits li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-heart"></i> Nuestras Terapias</h1>
+      <p>Tratamientos especializados para tu bienestar integral</p>
+    </header>
+
+    <div class="therapies-grid">
+      <div class="therapy-card">
+        <div class="therapy-header">
+          <div class="therapy-icon">
+            <i class="fas fa-hand-holding-heart"></i>
+          </div>
+          <h2>Masaje Sueco</h2>
+        </div>
+        <p>Técnica clásica que promueve la relajación profunda y mejora la circulación sanguínea.</p>
+        <div class="therapy-benefits">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Reduce el estrés y la ansiedad</li>
+            <li>Alivia dolores musculares</li>
+            <li>Mejora la flexibilidad</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="therapy-card">
+        <div class="therapy-header">
+          <div class="therapy-icon">
+            <i class="fas fa-spa"></i>
+          </div>
+          <h2>Reiki</h2>
+        </div>
+        <p>Terapia energética japonesa que canaliza la energía universal para sanar cuerpo, mente y espíritu.</p>
+        <div class="therapy-benefits">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Equilibra los chakras</li>
+            <li>Promueve la sanación emocional</li>
+            <li>Aumenta la energía vital</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="therapy-card">
+        <div class="therapy-header">
+          <div class="therapy-icon">
+            <i class="fas fa-moon"></i>
+          </div>
+          <h2>Meditación Guiada</h2>
+        </div>
+        <p>Sesiones dirigidas por expertos para ayudarte a encontrar paz interior y claridad mental.</p>
+        <div class="therapy-benefits">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Reduce la presión arterial</li>
+            <li>Mejora la concentración</li>
+            <li>Fomenta el autoconocimiento</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="therapy-card">
+        <div class="therapy-header">
+          <div class="therapy-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <h2>Aromaterapia</h2>
+        </div>
+        <p>Uso de aceites esenciales naturales para equilibrar emociones y promover el bienestar físico.</p>
+        <div class="therapy-benefits">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Alivia el insomnio</li>
+            <li>Mejora el estado de ánimo</li>
+            <li>Fortalece el sistema inmunológico</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="therapy-card">
+        <div class="therapy-header">
+          <div class="therapy-icon">
+            <i class="fas fa-shoe-prints"></i>
+          </div>
+          <h2>Reflexología</h2>
+        </div>
+        <p>Técnica que aplica presión en puntos específicos de los pies para estimular órganos y sistemas del cuerpo.</p>
+        <div class="therapy-benefits">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Desintoxica el organismo</li>
+            <li>Alivia dolores crónicos</li>
+            <li>Mejora la circulación</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="therapy-card">
+        <div class="therapy-header">
+          <div class="therapy-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h2>Terapia con Cristales</h2>
+        </div>
+        <p>Uso de cristales y piedras preciosas para armonizar y equilibrar la energía personal.</p>
+        <div class="therapy-benefits">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Limpia el aura</li>
+            <li>Protege de energías negativas</li>
+            <li>Amplifica intenciones positivas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>

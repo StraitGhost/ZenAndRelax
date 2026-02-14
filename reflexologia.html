@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reflexología - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .reflex-hero {
+      background: linear-gradient(135deg, rgba(75, 0, 130, 0.8), rgba(106, 13, 173, 0.85)), url('https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=1200&h=400&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .reflex-hero h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .reflex-hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .zones-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin-bottom: 40px;
+    }
+
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .zone-card {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .zone-card:hover {
+      transform: translateY(-5px);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .zone-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+    }
+
+    .zone-icon {
+      font-size: 1.8rem;
+      color: #9370DB;
+    }
+
+    .zone-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .zone-card p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+
+    .benefits-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .benefits-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .benefit-category {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .benefit-category:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .benefit-category h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .benefit-category ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .benefit-category li {
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 12px;
+      padding-left: 25px;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .benefit-category li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .treatments-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .treatments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .treatment-type {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+    }
+
+    .treatment-type h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .treatment-type p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .price-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: #4CAF50;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-shoe-prints"></i> Reflexología</h1>
+      <p>Técnicas especializadas para estimular puntos de energía</p>
+    </header>
+
+    <div class="reflex-hero">
+      <h2>El Mapa de tu Bienestar</h2>
+      <p>La reflexología es una terapia que aplica presión en puntos específicos de los pies, manos y orejas que corresponden a diferentes órganos y sistemas del cuerpo. Esta técnica milenaria promueve la autocuración y restaura el equilibrio natural del organismo.</p>
+    </div>
+
+    <div class="zones-section">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 20px; text-align: center;">
+        <i class="fas fa-map-marked-alt"></i> Zonas Reflejas Principales
+      </h2>
+      <p style="color: rgba(255, 255, 255, 0.9); text-align: center; margin-bottom: 25px;">
+        Cada área de tus pies está conectada con un órgano o sistema específico
+      </p>
+
+      <div class="zones-grid">
+        <div class="zone-card">
+          <div class="zone-header">
+            <div class="zone-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>Zona Cerebral</h3>
+          </div>
+          <p>Ubicada en las puntas de los dedos gordo e índice. Estimula la claridad mental, alivia dolores de cabeza y mejora la concentración.</p>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-header">
+            <div class="zone-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3>Zona Cardíaca</h3>
+          </div>
+          <p>Situada en la parte superior del arco del pie izquierdo. Regula la presión arterial, mejora la circulación y fortalece el sistema cardiovascular.</p>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-header">
+            <div class="zone-icon">
+              <i class="fas fa-lungs"></i>
+            </div>
+            <h3>Zona Pulmonar</h3>
+          </div>
+          <p>Localizada en la parte superior del pie, debajo de los dedos. Ayuda con problemas respiratorios, asma y mejora la oxigenación del cuerpo.</p>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-header">
+            <div class="zone-icon">
+              <i class="fas fa-stomach"></i>
+            </div>
+            <h3>Zona Digestiva</h3>
+          </div>
+          <p>En el centro del arco del pie. Alivia problemas digestivos, estimula el metabolismo y mejora la absorción de nutrientes.</p>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-header">
+            <div class="zone-icon">
+              <i class="fas fa-kidney"></i>
+            </div>
+            <h3>Zona Renal</h3>
+          </div>
+          <p>Ubicada en la parte inferior del arco. Desintoxica el organismo, mejora la función renal y elimina toxinas acumuladas.</p>
+        </div>
+
+        <div class="zone-card">
+          <div class="zone-header">
+            <div class="zone-icon">
+              <i class="fas fa-bone"></i>
+            </div>
+            <h3>Zona Espinal</h3>
+          </div>
+          <p>En el borde interno del pie, desde el talón hasta el dedo gordo. Alivia dolores de espalda, mejora la postura y equilibra el sistema nervioso.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="benefits-section">
+      <div class="benefit-category">
+        <h2><i class="fas fa-tint"></i> Beneficios Físicos</h2>
+        <ul>
+          <li>Alivia el dolor crónico y agudo</li>
+          <li>Mejora la circulación sanguínea</li>
+          <li>Estimula el sistema linfático</li>
+          <li>Desintoxica el organismo</li>
+          <li>Mejora el sueño y la digestión</li>
+          <li>Fortalece el sistema inmunológico</li>
+          <li>Reduce la inflamación</li>
+        </ul>
+      </div>
+
+      <div class="benefit-category">
+        <h2><i class="fas fa-brain"></i> Beneficios Emocionales</h2>
+        <ul>
+          <li>Reduce el estrés y la ansiedad</li>
+          <li>Promueve la relajación profunda</li>
+          <li>Equilibra las emociones</li>
+          <li>Mejora el estado de ánimo</li>
+          <li>Alivia la depresión leve</li>
+          <li>Aumenta la energía vital</li>
+          <li>Mejora la autoestima</li>
+        </ul>
+      </div>
+
+      <div class="benefit-category">
+        <h2><i class="fas fa-spa"></i> Beneficios Energéticos</h2>
+        <ul>
+          <li>Equilibra los chakras</li>
+          <li>Limpia el aura</li>
+          <li>Restaura el flujo energético</li>
+          <li>Armoniza cuerpo y mente</li>
+          <li>Estimula la autocuración</li>
+          <li>Conecta con la intuición</li>
+          <li>Promueve la paz interior</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="treatments-section">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 20px;">
+        <i class="fas fa-calendar-check"></i> Tipos de Tratamiento
+      </h2>
+      <p style="margin-bottom: 25px; color: rgba(255, 255, 255, 0.9);">
+        Sesiones personalizadas según tus necesidades específicas
+      </p>
+
+      <div class="treatments-grid">
+        <div class="treatment-type">
+          <h3>Reflexología Básica</h3>
+          <p>Sesión completa de 45 minutos que cubre todas las zonas reflejas principales.</p>
+          <div class="price-tag">$65</div>
+        </div>
+
+        <div class="treatment-type">
+          <h3>Reflexología Profunda</h3>
+          <p>Tratamiento intensivo de 60 minutos enfocado en áreas específicas problemáticas.</p>
+          <div class="price-tag">$85</div>
+        </div>
+
+        <div class="treatment-type">
+          <h3>Reflexología + Aromaterapia</h3>
+          <p>Combinación de reflexología con aceites esenciales para una experiencia sensorial completa.</p>
+          <div class="price-tag">$95</div>
+        </div>
+
+        <div class="treatment-type">
+          <h3>Reflexología Facial</h3>
+          <p>Técnica especializada que trabaja puntos reflejos en el rostro para rejuvenecimiento y relajación.</p>
+          <div class="price-tag">$75</div>
+        </div>
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn" style="margin-top: 30px;">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>

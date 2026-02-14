@@ -1,0 +1,862 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #4B0082, #9370DB);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  margin: 20px 0 15px;
+  color: #9370DB;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  margin: 15px 0 10px;
+  color: #4B0082;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 25px;
+  background: linear-gradient(135deg, #4B0082, #6A0DAD);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  border: 2px solid rgba(138, 43, 226, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(75, 0, 130, 0.4);
+  background: linear-gradient(135deg, #6A0DAD, #4B0082);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.yoga-hero {
+  background: linear-gradient(135deg, rgba(75, 0, 130, 0.85), rgba(106, 13, 173, 0.9)), url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&h=400&fit=crop');
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.yoga-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.2) 0%, transparent 70%);
+  z-index: 0;
+}
+
+.yoga-hero h2 {
+  position: relative;
+  z-index: 1;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.yoga-hero p {
+  position: relative;
+  z-index: 1;
+  font-size: 1.25rem;
+  max-width: 850px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.8;
+}
+
+/* Nuevo mensaje informativo sobre el yoga */
+.info-message {
+  background: linear-gradient(135deg, rgba(75, 0, 130, 0.15), rgba(106, 13, 173, 0.2));
+  border-radius: 20px;
+  padding: 30px;
+  border: 2px solid rgba(138, 43, 226, 0.3);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+.info-message::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+  z-index: 0;
+}
+
+.info-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #4B0082, #6A0DAD);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(75, 0, 130, 0.3);
+  z-index: 1;
+}
+
+.info-icon i {
+  font-size: 2rem;
+  color: white;
+}
+
+.info-content {
+  flex: 1;
+  z-index: 1;
+}
+
+.info-message h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-message p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.8;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+}
+
+.info-message p strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.info-message i.fa-lightbulb {
+  color: #FFD700;
+  margin-right: 8px;
+}
+
+.yoga-styles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 35px;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .yoga-styles {
+    grid-template-columns: 1fr;
+  }
+  
+  .yoga-hero {
+    padding: 40px 20px;
+  }
+  
+  .yoga-hero h2 {
+    font-size: 1.8rem;
+  }
+  
+  .yoga-hero p {
+    font-size: 1.1rem;
+  }
+  
+  .info-message {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .info-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+  }
+}
+
+.yoga-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 35px 30px;
+  border: 1px solid rgba(138, 43, 226, 0.25);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.yoga-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, transparent 70%);
+  z-index: 0;
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+.yoga-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(138, 43, 226, 0.4);
+}
+
+.yoga-card:hover::before {
+  transform: scale(1);
+}
+
+.yoga-card:hover .learn-btn {
+  transform: translateY(0) scale(1.05);
+  box-shadow: 0 8px 20px rgba(75, 0, 130, 0.4);
+}
+
+.yoga-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.yoga-icon {
+  width: 65px;
+  height: 65px;
+  background: rgba(75, 0, 130, 0.3);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: #9370DB;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.yoga-card h2 {
+  font-size: 1.7rem;
+  color: #fff;
+  margin: 0;
+  background: linear-gradient(135deg, #fff, #e0e0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.yoga-card p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin-bottom: 25px;
+  position: relative;
+  z-index: 1;
+  font-size: 1.05rem;
+}
+
+.learn-btn {
+  background: linear-gradient(135deg, #4B0082, #6A0DAD);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 32px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  box-shadow: 0 6px 15px rgba(75, 0, 130, 0.3);
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+.learn-btn:hover {
+  background: linear-gradient(135deg, #6A0DAD, #4B0082);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(75, 0, 130, 0.45);
+}
+
+.learn-btn:active {
+  transform: translateY(1px);
+}
+
+/* Botón de administrador - solo visible para admins */
+.admin-edit-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, #FF6B6B, #EE5A24);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 25px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(238, 90, 36, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: pulseAdmin 2s infinite;
+}
+
+.admin-edit-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(238, 90, 36, 0.55);
+  background: linear-gradient(135deg, #EE5A24, #FF6B6B);
+}
+
+.admin-edit-btn:active {
+  transform: translateY(1px);
+}
+
+.admin-edit-btn i {
+  font-size: 1.3rem;
+}
+
+@keyframes pulseAdmin {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(238, 90, 36, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(238, 90, 36, 0);
+  }
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.9) 100%);
+  border-radius: 24px;
+  width: 90%;
+  max-width: 950px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.modal.active .modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(220, 53, 69, 0.15);
+  color: #DC3545;
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.close-modal:hover {
+  background: rgba(220, 53, 69, 0.25);
+  transform: rotate(90deg);
+}
+
+.modal-header {
+  padding: 30px 40px 20px;
+  border-bottom: 2px solid rgba(138, 43, 226, 0.2);
+  position: relative;
+  text-align: center;
+}
+
+.modal-header h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.2rem;
+  color: #1a1a2e;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #4B0082, #6A0DAD);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #4B0082, #6A0DAD);
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: white;
+  font-size: 2.8rem;
+  box-shadow: 0 10px 25px rgba(75, 0, 130, 0.3);
+}
+
+.modal-body {
+  padding: 30px 40px;
+  color: #1a1a2e;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Media Section */
+.media-section {
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 25px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Video Info Box */
+.video-info {
+  background: rgba(75, 0, 130, 0.08);
+  border-left: 4px solid #4B0082;
+  padding: 15px 20px;
+  border-radius: 0 10px 10px 0;
+  margin: 20px 0;
+  font-size: 0.95rem;
+}
+
+.video-info p {
+  color: #2c2c44;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.video-info i {
+  color: #4B0082;
+  margin-right: 8px;
+}
+
+.gallery-section {
+  margin-top: 20px;
+}
+
+.gallery-section h3 {
+  color: #4B0082;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.gallery-item {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  height: 200px;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Technique Sections */
+.technique-section {
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.technique-section:last-child {
+  border-bottom: none;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.technique-section h3 {
+  color: #4B0082;
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.technique-section p {
+  color: #333;
+  margin-bottom: 12px;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.poses-list p,
+.steps-list p {
+  color: #2c2c44;
+  margin-bottom: 12px;
+  padding-left: 28px;
+  position: relative;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+.poses-list p::before,
+.steps-list p::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 10px;
+  height: 10px;
+  background: #6A0DAD;
+  border-radius: 50%;
+}
+
+.poses-list p i,
+.steps-list p i {
+  color: #4B0082;
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.tips-box {
+  background: rgba(106, 13, 173, 0.08);
+  border-left: 4px solid #6A0DAD;
+  padding: 20px;
+  border-radius: 0 12px 12px 0;
+  margin-top: 15px;
+}
+
+.tips-box h4 {
+  color: #4B0082;
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.tips-box ul {
+  padding-left: 25px;
+  margin-top: 10px;
+}
+
+.tips-box li {
+  color: #2c2c44;
+  margin-bottom: 8px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.tips-box li::before {
+  content: '•';
+  color: #6A0DAD;
+  font-weight: bold;
+  position: absolute;
+  left: -18px;
+}
+
+/* Scrollbar personalizado */
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(138, 43, 226, 0.05);
+  border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4B0082, #6A0DAD);
+  border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #6A0DAD, #4B0082);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 20px;
+    border-radius: 20px;
+  }
+  
+  .modal-header {
+    padding: 25px 25px 15px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.9rem;
+  }
+  
+  .modal-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2.4rem;
+  }
+  
+  .close-modal {
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
+  }
+  
+  .modal-body {
+    padding: 25px;
+    font-size: 0.95rem;
+  }
+  
+  .technique-section h3 {
+    font-size: 1.35rem;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .learn-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+  
+  .yoga-card {
+    padding: 28px 25px;
+  }
+  
+  .yoga-icon {
+    width: 55px;
+    height: 55px;
+    font-size: 1.9rem;
+  }
+  
+  .yoga-card h2 {
+    font-size: 1.55rem;
+  }
+  
+  .admin-edit-btn {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+  
+  .admin-edit-btn i {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 25px 15px;
+  }
+  
+  header h1 {
+    font-size: 2.1rem;
+  }
+  
+  .yoga-hero {
+    padding: 35px 20px;
+    margin-bottom: 25px;
+  }
+  
+  .yoga-hero h2 {
+    font-size: 1.7rem;
+  }
+  
+  .yoga-hero p {
+    font-size: 1.05rem;
+  }
+  
+  .info-message {
+    padding: 20px 15px;
+    font-size: 0.95rem;
+  }
+  
+  .info-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.6rem;
+  }
+  
+  .info-message h3 {
+    font-size: 1.3rem;
+  }
+  
+  .yoga-styles {
+    gap: 25px;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    width: 95%;
+    max-height: 85vh;
+  }
+  
+  .modal-body {
+    padding: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .poses-list p,
+  .steps-list p {
+    font-size: 0.95rem;
+    padding-left: 25px;
+  }
+  
+  .tips-box ul {
+    padding-left: 20px;
+  }
+  
+  .back-btn {
+    padding: 10px 22px;
+    font-size: 0.95rem;
+  }
+  
+  .admin-edit-btn {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    border-radius: 45px;
+  }
+  
+  .admin-edit-btn span {
+    display: none;
+  }
+  
+  .admin-edit-btn i {
+    font-size: 1.4rem;
+    margin: 0;
+  }
+}

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro - Zenzandrelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="register.css">
+</head>
+<body>
+
+  <div class="background-container">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+  </div>
+
+  <main>
+    <div class="register-card animate__animated animate__fadeIn">
+      <div class="logo-container">
+        <div class="logo-glow"></div>
+        <div class="logo">
+          <i class="fas fa-spa"></i>
+        </div>
+      </div>
+      
+      <h1 class="title">Crear Cuenta</h1>
+      <p class="subtitle">Únete a Zenzandrelax y comienza tu viaje hacia la tranquilidad</p>
+      
+      <form id="registerForm" class="register-form">
+        <div class="form-group">
+          <label for="nombre">
+            <i class="fas fa-user"></i> Nombre Completo
+          </label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+          <div class="input-decoration"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">
+            <i class="fas fa-envelope"></i> Correo Electrónico
+          </label>
+          <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+          <div class="input-decoration"></div>
+        </div>
+
+        <div class="form-group password-group">
+          <label for="password">
+            <i class="fas fa-lock"></i> Contraseña
+          </label>
+          <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="••••••••" required>
+            <button type="button" id="togglePassword" class="toggle-btn">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="input-decoration"></div>
+          <p class="password-hint">Mínimo 6 caracteres</p>
+        </div>
+
+        <div class="terms">
+          <input type="checkbox" id="terms" name="terms" required>
+          <label for="terms">
+            Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a>
+          </label>
+        </div>
+
+        <button type="submit" id="registerBtn" class="primary-btn">
+          <span>Crear Cuenta</span>
+        </button>
+      </form>
+
+      <div class="login-link">
+        <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+      </div>
+    </div>
+  </main>
+
+  <div id="successAlert" class="alert success">✅ Registro exitoso</div>
+  <div id="errorAlert" class="alert error">❌ Error</div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, collection, addDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // 🔹 Nueva Configuración de Firebase (Zenzandrelax)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381",
+      measurementId: "G-2P0DXQC7JG"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore();
+
+    const registerCard = document.querySelector('.register-card');
+    const registerBtn = document.getElementById('registerBtn');
+    const successAlert = document.getElementById('successAlert');
+    const errorAlert = document.getElementById('errorAlert');
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    // Toggle password visibility
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      togglePassword.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+    });
+
+    const showAlert = (el, msg) => {
+      el.textContent = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 3000);
+    };
+
+    // 🔹 Verificar si ya hay sesión iniciada
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // Usuario ya autenticado - verificar rol y redirigir
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          const role = userDoc.exists() && userDoc.data().role
+            ? userDoc.data().role
+            : 'cliente';
+          
+          localStorage.setItem('userRole', role);
+          localStorage.setItem('userEmail', user.email);
+          
+          // Redirigir inmediatamente a zenzandrelax.html
+          window.location.href = 'zenzandrelax.html';
+        } catch (error) {
+          console.error('[Auth Check Error]', error);
+          // Si hay error, mostrar el formulario normalmente
+          setTimeout(() => {
+            registerCard.style.opacity = '1';
+            registerCard.style.transform = 'translateY(0)';
+          }, 800);
+        }
+      } else {
+        // No hay usuario autenticado - mostrar formulario
+        setTimeout(() => {
+          registerCard.style.opacity = '1';
+          registerCard.style.transform = 'translateY(0)';
+        }, 800);
+      }
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!nombre || !email || !password) {
+        showAlert(errorAlert, '❌ Todos los campos son obligatorios.');
+        return;
+      }
+
+      registerBtn.disabled = true;
+      registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          nombre: nombre,
+          email: email,
+          role: 'usuario',
+          fecha: new Date()
+        });
+
+        // Guardar rol en localStorage
+        localStorage.setItem('userRole', 'usuario');
+        localStorage.setItem('userEmail', email);
+
+        showAlert(successAlert, '✅ Registro exitoso. ¡Bienvenido, ' + nombre + '!');
+        setTimeout(() => {
+          // Redirigir a zenzandrelax.html
+          window.location.href = 'zenzandrelax.html';
+        }, 1500);
+
+      } catch (error) {
+        console.error("Error en registro:", error);
+        let mensaje = '❌ Error al registrar.';
+        if (error.code === 'auth/email-already-in-use') {
+          mensaje = '❌ Este email ya está en uso.';
+        } else if (error.code === 'auth/invalid-email') {
+          mensaje = '❌ Email no válido.';
+        } else if (error.code === 'auth/weak-password') {
+          mensaje = '❌ La contraseña debe tener al menos 6 caracteres.';
+        }
+        showAlert(errorAlert, mensaje);
+      } finally {
+        registerBtn.disabled = false;
+        registerBtn.innerHTML = '<span>Crear Cuenta</span>';
+      }
+    });
+
+    // Form animations
+    document.querySelectorAll('.form-group input').forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', () => {
+        if (!input.value) {
+          input.parentElement.classList.remove('focused');
+        }
+      });
+    });
+
+    // Terms checkbox styling
+    const termsCheckbox = document.getElementById('terms');
+    termsCheckbox.addEventListener('change', () => {
+      if (termsCheckbox.checked) {
+        termsCheckbox.parentElement.classList.add('checked');
+      } else {
+        termsCheckbox.parentElement.classList.remove('checked');
+      }
+    });
+  </script>
+</body>
+</html>

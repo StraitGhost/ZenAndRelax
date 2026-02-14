@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Configuración - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .config-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin-bottom: 30px;
+    }
+
+    .config-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.6rem;
+      color: #fff;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #9370DB;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(75, 0, 130, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(138, 43, 226, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .notification {
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .notification.success {
+      background: rgba(76, 175, 80, 0.2);
+      border: 1px solid rgba(76, 175, 80, 0.4);
+      color: #4CAF50;
+    }
+
+    .notification.error {
+      background: rgba(220, 53, 69, 0.2);
+      border: 1px solid rgba(220, 53, 69, 0.4);
+      color: #DC3545;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-cog"></i> Configuración</h1>
+      <p>Personaliza tu experiencia en ZenzAndRelax</p>
+    </header>
+
+    <div class="config-section">
+      <h2><i class="fas fa-user-circle"></i> Información Personal</h2>
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="fullName"><i class="fas fa-user"></i> Nombre Completo</label>
+          <input type="text" id="fullName" name="fullName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Correo Electrónico</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone"><i class="fas fa-phone"></i> Teléfono</label>
+          <input type="tel" id="phone" name="phone" placeholder="+123 456 7890">
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Guardar Cambios
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="resetForm('profileForm')">
+            <i class="fas fa-undo"></i> Cancelar
+          </button>
+        </div>
+      </form>
+      <div id="profileNotification" class="notification"></div>
+    </div>
+
+    <div class="config-section">
+      <h2><i class="fas fa-lock"></i> Cambiar Contraseña</h2>
+      <form id="passwordForm">
+        <div class="form-group">
+          <label for="currentPassword"><i class="fas fa-key"></i> Contraseña Actual</label>
+          <input type="password" id="currentPassword" name="currentPassword" required>
+        </div>
+
+        <div class="form-group">
+          <label for="newPassword"><i class="fas fa-lock"></i> Nueva Contraseña</label>
+          <input type="password" id="newPassword" name="newPassword" required minlength="6">
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword"><i class="fas fa-lock"></i> Confirmar Nueva Contraseña</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-sync-alt"></i> Cambiar Contraseña
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="resetForm('passwordForm')">
+            <i class="fas fa-undo"></i> Cancelar
+          </button>
+        </div>
+      </form>
+      <div id="passwordNotification" class="notification"></div>
+    </div>
+
+    <div class="config-section">
+      <h2><i class="fas fa-bell"></i> Preferencias de Notificaciones</h2>
+      <form id="notificationForm">
+        <div class="form-group">
+          <label for="emailNotifications"><i class="fas fa-envelope"></i> Notificaciones por Email</label>
+          <select id="emailNotifications" name="emailNotifications">
+            <option value="all">Recibir todas las notificaciones</option>
+            <option value="important">Solo notificaciones importantes</option>
+            <option value="none">No recibir notificaciones</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="smsNotifications"><i class="fas fa-sms"></i> Notificaciones por SMS</label>
+          <select id="smsNotifications" name="smsNotifications">
+            <option value="all">Recibir todas las notificaciones</option>
+            <option value="appointments">Solo recordatorios de citas</option>
+            <option value="none">No recibir notificaciones</option>
+          </select>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Guardar Preferencias
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="resetForm('notificationForm')">
+            <i class="fas fa-undo"></i> Restaurar Predeterminadas
+          </button>
+        </div>
+      </form>
+      <div id="notificationNotification" class="notification"></div>
+    </div>
+
+    <div class="config-section">
+      <h2><i class="fas fa-language"></i> Idioma e Interfaz</h2>
+      <form id="languageForm">
+        <div class="form-group">
+          <label for="language"><i class="fas fa-globe"></i> Idioma Preferido</label>
+          <select id="language" name="language">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="pt">Português</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="theme"><i class="fas fa-palette"></i> Tema de la Interfaz</label>
+          <select id="theme" name="theme">
+            <option value="light">Claro (Predeterminado)</option>
+            <option value="dark">Oscuro</option>
+            <option value="auto">Automático (Según sistema)</option>
+          </select>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Aplicar Cambios
+          </button>
+        </div>
+      </form>
+      <div id="languageNotification" class="notification"></div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn" style="margin-top: 20px; display: inline-block;">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      } else {
+        loadUserData(user);
+      }
+    });
+
+    function loadUserData(user) {
+      db.collection('users').where('uid', '==', user.uid).get().then((snapshot) => {
+        if (!snapshot.empty) {
+          const userData = snapshot.docs[0].data();
+          document.getElementById('fullName').value = userData.nombre || '';
+          document.getElementById('email').value = userData.email || '';
+          document.getElementById('phone').value = userData.phone || '';
+        }
+      }).catch((error) => {
+        console.error('Error al cargar datos:', error);
+      });
+    }
+
+    function resetForm(formId) {
+      document.getElementById(formId).reset();
+    }
+
+    function showNotification(elementId, message, isSuccess = true) {
+      const notification = document.getElementById(elementId);
+      notification.textContent = message;
+      notification.className = `notification ${isSuccess ? 'success' : 'error'}`;
+      notification.style.display = 'block';
+      
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 3000);
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+
+      try {
+        await db.collection('users').where('uid', '==', user.uid).get().then(async (snapshot) => {
+          if (!snapshot.empty) {
+            const docRef = snapshot.docs[0].ref;
+            await docRef.update({
+              nombre: fullName,
+              email: email,
+              phone: phone
+            });
+          }
+        });
+
+        showNotification('profileNotification', '✅ Información actualizada exitosamente');
+      } catch (error) {
+        console.error('Error al actualizar perfil:', error);
+        showNotification('profileNotification', '❌ Error al actualizar la información', false);
+      }
+    });
+
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword !== confirmPassword) {
+        showNotification('passwordNotification', '❌ Las contraseñas no coinciden', false);
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        showNotification('passwordNotification', '❌ La contraseña debe tener al menos 6 caracteres', false);
+        return;
+      }
+
+      try {
+        // Re-autenticar al usuario
+        const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
+        await user.reauthenticateWithCredential(credential);
+        
+        // Cambiar contraseña
+        await user.updatePassword(newPassword);
+        
+        showNotification('passwordNotification', '✅ Contraseña cambiada exitosamente');
+        document.getElementById('passwordForm').reset();
+      } catch (error) {
+        console.error('Error al cambiar contraseña:', error);
+        let errorMsg = '❌ Error al cambiar la contraseña';
+        if (error.code === 'auth/wrong-password') {
+          errorMsg = '❌ Contraseña actual incorrecta';
+        }
+        showNotification('passwordNotification', errorMsg, false);
+      }
+    });
+
+    document.getElementById('notificationForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const emailNotif = document.getElementById('emailNotifications').value;
+      const smsNotif = document.getElementById('smsNotifications').value;
+
+      try {
+        await db.collection('users').where('uid', '==', user.uid).get().then(async (snapshot) => {
+          if (!snapshot.empty) {
+            const docRef = snapshot.docs[0].ref;
+            await docRef.update({
+              emailNotifications: emailNotif,
+              smsNotifications: smsNotif
+            });
+          }
+        });
+
+        showNotification('notificationNotification', '✅ Preferencias guardadas exitosamente');
+      } catch (error) {
+        console.error('Error al guardar preferencias:', error);
+        showNotification('notificationNotification', '❌ Error al guardar las preferencias', false);
+      }
+    });
+
+    document.getElementById('languageForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const language = document.getElementById('language').value;
+      const theme = document.getElementById('theme').value;
+
+      // Guardar en localStorage
+      localStorage.setItem('preferredLanguage', language);
+      localStorage.setItem('preferredTheme', theme);
+
+      showNotification('languageNotification', '✅ Configuración aplicada exitosamente');
+    });
+  </script>
+</body>
+</html>

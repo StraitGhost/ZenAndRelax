@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Masajes - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="masajes.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-hand-holding-heart"></i> Técnicas de Masaje</h1>
+      <p>Aprende diferentes tipos de masajes y cómo realizarlos en casa</p>
+    </header>
+
+    <div class="massage-hero">
+      <h2>El Arte de la Relajación Manual</h2>
+      <p>Descubre técnicas ancestrales y modernas de masaje que puedes aplicar para aliviar tensiones, mejorar la circulación y promover el bienestar. Cada técnica incluye instrucciones profesionales y una versión casera para hacer en casa.</p>
+    </div>
+
+    <div class="massage-types">
+      <div class="massage-type" data-massage="swedish">
+        <div class="massage-header">
+          <div class="massage-icon">
+            <i class="fas fa-hand-paper"></i>
+          </div>
+          <h2>Masaje Sueco</h2>
+        </div>
+        <p>Técnica clásica que combina movimientos suaves y profundos para promover la relajación total del cuerpo y mente.</p>
+        <button class="learn-btn">
+          <i class="fas fa-book-open"></i> Aprender Técnica
+        </button>
+      </div>
+
+      <div class="massage-type" data-massage="hotstones">
+        <div class="massage-header">
+          <div class="massage-icon">
+            <i class="fas fa-fire"></i>
+          </div>
+          <h2>Piedras Calientes</h2>
+        </div>
+        <p>Utiliza piedras volcánicas calentadas para profundizar en los tejidos musculares y liberar tensiones acumuladas.</p>
+        <button class="learn-btn">
+          <i class="fas fa-book-open"></i> Aprender Técnica
+        </button>
+      </div>
+
+      <div class="massage-type" data-massage="aromatherapy">
+        <div class="massage-header">
+          <div class="massage-icon">
+            <i class="fas fa-tint"></i>
+          </div>
+          <h2>Aceites Esenciales</h2>
+        </div>
+        <p>Combinación de técnicas de masaje con aromaterapia para una experiencia sensorial completa que nutre cuerpo y alma.</p>
+        <button class="learn-btn">
+          <i class="fas fa-book-open"></i> Aprender Técnica
+        </button>
+      </div>
+
+      <div class="massage-type" data-massage="sports">
+        <div class="massage-header">
+          <div class="massage-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h2>Masaje Deportivo</h2>
+        </div>
+        <p>Diseñado para atletas y personas activas, este masaje se enfoca en la recuperación muscular y prevención de lesiones.</p>
+        <button class="learn-btn">
+          <i class="fas fa-book-open"></i> Aprender Técnica
+        </button>
+      </div>
+
+      <div class="massage-type" data-massage="deep">
+        <div class="massage-header">
+          <div class="massage-icon">
+            <i class="fas fa-moon"></i>
+          </div>
+          <h2>Relajación Profunda</h2>
+        </div>
+        <p>Técnica intensiva que trabaja las capas más profundas de los músculos para liberar tensiones crónicas y nudos musculares.</p>
+        <button class="learn-btn">
+          <i class="fas fa-book-open"></i> Aprender Técnica
+        </button>
+      </div>
+
+      <div class="massage-type" data-massage="self">
+        <div class="massage-header">
+          <div class="massage-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <h2>Automasaje</h2>
+        </div>
+        <p>Aprende técnicas efectivas para darte tu propio masaje en casa, enfocándote en áreas de tensión común como cuello, hombros y pies.</p>
+        <button class="learn-btn">
+          <i class="fas fa-book-open"></i> Aprender Técnica
+        </button>
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <!-- Modal para detalles del masaje -->
+  <div class="modal" id="massageModal">
+    <div class="modal-content">
+      <button class="close-modal">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-header">
+        <h2 id="modalTitle">Técnica de Masaje</h2>
+        <div class="modal-icon" id="modalIcon">
+          <i class="fas fa-spa"></i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="technique-section">
+          <h3><i class="fas fa-info-circle"></i> ¿Qué es y para qué sirve?</h3>
+          <p id="modalDescription">Descripción del masaje.</p>
+        </div>
+        
+        <div class="technique-section">
+          <h3><i class="fas fa-user-md"></i> Técnica Profesional</h3>
+          <div id="professionalSteps" class="steps-list"></div>
+        </div>
+        
+        <div class="technique-section">
+          <h3><i class="fas fa-home"></i> Versión Casera (Cacera)</h3>
+          <p id="homemadeIntro">Instrucciones para hacer en casa con elementos comunes.</p>
+          <div id="homemadeSteps" class="steps-list"></div>
+          <div class="tips-box">
+            <h4><i class="fas fa-lightbulb"></i> Consejos Importantes:</h4>
+            <ul id="homemadeTips"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Verificar autenticación
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
+    });
+
+    // Base de datos de técnicas de masaje
+    const massageTechniques = {
+      swedish: {
+        title: "Masaje Sueco",
+        icon: "fas fa-hand-paper",
+        description: "El masaje sueco es una técnica clásica que utiliza movimientos rítmicos y presión variable para relajar músculos, mejorar la circulación sanguínea y liberar toxinas. Es ideal para reducir el estrés y aliviar tensiones musculares generales.",
+        professionalSteps: [
+          "Preparación: Crea un ambiente tranquilo con temperatura cálida y música suave.",
+          "Aplica aceite de masaje en las manos y caliéntalo frotándolas.",
+          "Comienza con 'effleurage' (caricias largas y suaves) para calentar los músculos.",
+          "Continúa con 'petrissage' (amasamiento) para trabajar tejidos más profundos.",
+          "Usa 'fricción' (movimientos circulares con las yemas de los dedos) en nudos musculares.",
+          "Termina con más 'effleurage' y estiramientos suaves."
+        ],
+        homemadeIntro: "Puedes hacer una versión simplificada en casa con elementos básicos:",
+        homemadeSteps: [
+          "Prepara una superficie cómoda (cama o colchoneta en el suelo).",
+          "Usa aceite de coco, oliva o incluso loción corporal como lubricante.",
+          "Comienza con caricias suaves en la espalda, brazos y piernas.",
+          "Con los pulgares, haz movimientos circulares en los hombros y zona lumbar.",
+          "Amasa suavemente los músculos de las piernas y brazos con ambas manos.",
+          "Termina con palmaditas suaves y caricias relajantes."
+        ],
+        tips: [
+          "Comunica siempre la presión deseada - debe ser cómoda, no dolorosa.",
+          "Evita masajear zonas con heridas, inflamaciones o varices.",
+          "Bebe agua después del masaje para ayudar a eliminar toxinas.",
+          "No realices masajes profundos si la persona tiene fiebre o está enferma."
+        ]
+      },
+      hotstones: {
+        title: "Masaje con Piedras Calientes",
+        icon: "fas fa-fire",
+        description: "Esta técnica terapéutica utiliza piedras volcánicas lisas calentadas a una temperatura específica. El calor profundo de las piedras relaja los músculos, mejora la circulación y promueve una relajación profunda tanto física como mental.",
+        professionalSteps: [
+          "Selecciona piedras basálticas lisas de diferentes tamaños.",
+          "Calienta las piedras en agua a 50-55°C (nunca uses microondas).",
+          "Coloca toallas limpias sobre la mesa de masaje y sobre el cuerpo del paciente.",
+          "Coloca piedras calientes en puntos estratégicos de la espalda, vientre y entre las manos.",
+          "Realiza movimientos de masaje sueco combinando las piedras con las manos.",
+          "Reemplaza las piedras según se enfríen, manteniendo siempre toallas entre piel y piedra."
+        ],
+        homemadeIntro: "Versión casera segura con elementos accesibles:",
+        homemadeSteps: [
+          "Busca piedras lisas de río (del tamaño de tu palma) o usa paños calientes.",
+          "Calienta las piedras en agua caliente (no hirviendo) por 10-15 minutos.",
+          "Envuelve cada piedra en una toalla delgada para evitar quemaduras.",
+          "Acuesta a la persona boca abajo y coloca las piedras envueltas a lo largo de la columna.",
+          "Masajea suavemente alrededor de las piedras con movimientos circulares.",
+          "Reemplaza las piedras cuando dejen de sentirse calientes."
+        ],
+        tips: [
+          "NUNCA coloques piedras directamente sobre la piel - siempre usa toallas.",
+          "Prueba la temperatura en tu antebrazo antes de aplicar.",
+          "Evita esta técnica si la persona tiene diabetes, problemas circulatorios o piel sensible.",
+          "No uses piedras con grietas o irregulares que puedan romperse."
+        ]
+      },
+      aromatherapy: {
+        title: "Masaje con Aceites Esenciales",
+        icon: "fas fa-tint",
+        description: "Combina técnicas de masaje con los beneficios terapéuticos de los aceites esenciales. Cada aceite tiene propiedades específicas que potencian los efectos del masaje, ya sea para relajar, energizar o aliviar dolencias específicas.",
+        professionalSteps: [
+          "Selecciona 2-3 aceites esenciales según la necesidad (lavanda para relajación, menta para energía).",
+          "Diluye 5-10 gotas de aceite esencial en 30ml de aceite portador (almendras, jojoba o coco).",
+          "Realiza un test de alergia aplicando una gota en el antebrazo y esperando 15 minutos.",
+          "Aplica el aceite con movimientos de masaje sueco estándar.",
+          "Enfócate en zonas de mayor tensión, usando movimientos circulares con las yemas de los dedos.",
+          "Termina con palmaditas suaves para estimular la absorción."
+        ],
+        homemadeIntro: "Versión casera con aceites accesibles:",
+        homemadeSteps: [
+          "Usa aceites esenciales de calidad (puedes encontrarlos en tiendas naturistas o farmacias).",
+          "Mezcla 3-5 gotas de aceite esencial con 2 cucharadas de aceite de coco o almendras.",
+          "Opciones por beneficio:",
+          "- Para relajación: Lavanda + naranja",
+          "- Para aliviar dolores: Eucalipto + menta",
+          "- Para energía: Limón + romero",
+          "Aplica con movimientos suaves en espalda, cuello y hombros.",
+          "Masajea en dirección al corazón para favorecer la circulación."
+        ],
+        tips: [
+          "NUNCA apliques aceites esenciales puros directamente sobre la piel.",
+          "Evita el área de los ojos, genitales y mucosas.",
+          "No uses aceites cítricos si vas a exponerte al sol después.",
+          "Consulta con un médico si estás embarazada o tienes condiciones médicas."
+        ]
+      },
+      sports: {
+        title: "Masaje Deportivo",
+        icon: "fas fa-bolt",
+        description: "Técnica específica diseñada para atletas y personas activas. Se enfoca en prevenir lesiones, acelerar la recuperación muscular después del ejercicio y mejorar el rendimiento mediante la liberación de tensiones en grupos musculares específicos.",
+        professionalSteps: [
+          "Evalúa las áreas de mayor tensión o dolor con el atleta.",
+          "Comienza con movimientos rápidos y enérgicos para calentar los músculos.",
+          "Aplica 'fricción profunda' en zonas con contracturas o adherencias.",
+          "Usa 'compresiones' rítmicas en grandes grupos musculares (cuádriceps, isquiotibiales).",
+          "Incorpora estiramientos pasivos al final de cada grupo muscular trabajado.",
+          "Termina con movimientos de drenaje linfático para reducir la inflamación."
+        ],
+        homemadeIntro: "Versión casera para recuperación post-ejercicio:",
+        homemadeSteps: [
+          "Enfócate en los grupos musculares que más usaste durante el ejercicio.",
+          "Comienza con palmaditas suaves para activar la circulación.",
+          "Usa tus nudillos para aplicar presión en zonas con mayor tensión (pantorrillas, cuádriceps).",
+          "Para los pies: sostén el talón con una mano y usa los pulgares para masajear la planta.",
+          "Para espalda baja: usa una pelota de tenis contra una pared y haz movimientos circulares.",
+          "Termina con estiramientos suaves de las zonas trabajadas."
+        ],
+        tips: [
+          "Realiza este masaje después del entrenamiento, no antes.",
+          "Bebe abundante agua después para ayudar a eliminar el ácido láctico.",
+          "Evita masajear áreas con dolor agudo o inflamación visible.",
+          "Combina con baños de agua fría para reducir la inflamación muscular."
+        ]
+      },
+      deep: {
+        title: "Masaje de Relajación Profunda",
+        icon: "fas fa-moon",
+        description: "Técnica intensiva que trabaja las capas más profundas de los tejidos musculares y conectivos. Es especialmente efectivo para aliviar tensiones crónicas, nudos musculares (puntos gatillo) y mejorar la postura mediante la liberación de fascias.",
+        professionalSteps: [
+          "Comienza con movimientos suaves para preparar los tejidos.",
+          "Aplica presión sostenida con los nudillos, codos o antebrazos.",
+          "Localiza los puntos gatillo (nudos musculares) y mantén presión durante 20-30 segundos hasta sentir que se liberan.",
+          "Trabaja en secciones pequeñas del cuerpo en cada sesión para evitar sobrecarga.",
+          "Incorpora técnicas de liberación miofascial con movimientos lentos y profundos.",
+          "Termina con movimientos suaves y estiramientos para integrar el trabajo realizado."
+        ],
+        homemadeIntro: "Versión casera con herramientas accesibles:",
+        homemadeSteps: [
+          "Usa una pelota de tenis o foam roller para zonas de difícil acceso.",
+          "Para espalda: coloca la pelota entre tu espalda y una pared y haz movimientos circulares.",
+          "Para cuello: masajea con los dedos pulgares desde la base del cráneo hacia los hombros.",
+          "Para piernas: usa el foam roller bajo los muslos y deslízate suavemente hacia adelante y atrás.",
+          "Para pies: coloca una pelota de golf bajo el pie y presiona suavemente mientras mueves el pie.",
+          "Respira profundamente durante todo el masaje para ayudar a liberar tensiones."
+        ],
+        tips: [
+          "Este masaje puede ser incómodo pero NUNCA debe ser doloroso.",
+          "Hidrátate bien antes y después del masaje para ayudar a eliminar toxinas.",
+          "No realices este tipo de masaje si tienes osteoporosis, fracturas recientes o condiciones inflamatorias.",
+          "Descansa después del masaje - es normal sentirse relajado o incluso adormecido."
+        ]
+      },
+      self: {
+        title: "Técnicas de Automasaje",
+        icon: "fas fa-user",
+        description: "Aprende a darte tu propio masaje para aliviar tensiones diarias sin necesidad de otra persona. Estas técnicas son ideales para hacer en casa, en la oficina o después de un largo día, enfocándote en las áreas donde más acumulamos tensión.",
+        professionalSteps: [
+          "Identifica tus zonas de mayor tensión (generalmente cuello, hombros, sienes y pies).",
+          "Usa tus manos, nudillos o herramientas simples como pelotas o rodillos.",
+          "Para cuello y hombros: usa los dedos pulgares para hacer círculos profundos en la base del cráneo y a lo largo de los hombros.",
+          "Para cabeza: usa las yemas de los dedos para masajear el cuero cabelludo con movimientos circulares.",
+          "Para manos: presiona suavemente entre los huesos de los dedos y la palma.",
+          "Para pies: usa una pelota de tenis bajo el pie y aplica presión mientras ruedas suavemente."
+        ],
+        homemadeIntro: "Técnicas simples para hacer en cualquier momento:",
+        homemadeSteps: [
+          "Cuello y hombros:",
+          "- Inclina la cabeza hacia un lado y aplica presión suave con la mano opuesta.",
+          "- Haz círculos con los dedos en la base del cráneo durante 1 minuto.",
+          "Rostro y sienes:",
+          "- Usa las yemas de los dedos para masajear las sienes en círculos pequeños.",
+          "- Presiona suavemente los puntos a los lados de la nariz y desliza hacia las orejas.",
+          "Manos y muñecas:",
+          "- Presiona el espacio entre el pulgar y el índice con el pulgar de la otra mano.",
+          "- Gira las muñecas suavemente en ambos sentidos.",
+          "Pies:",
+          "- Siéntate y coloca una pelota de tenis bajo el pie.",
+          "- Aplica presión suave y rueda la pelota por toda la planta del pie."
+        ],
+        tips: [
+          "Dedica al menos 5-10 minutos diarios a tu automasaje.",
+          "Combina con respiración profunda: inhala al aplicar presión, exhala al liberar.",
+          "Usa aceite o crema para reducir la fricción en la piel.",
+          "Escucha tu cuerpo - si sientes dolor agudo, detente inmediatamente."
+        ]
+      }
+    };
+
+    // Funcionalidad del modal
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('massageModal');
+      const closeModalBtn = document.querySelector('.close-modal');
+      const learnButtons = document.querySelectorAll('.learn-btn');
+      
+      // Abrir modal al hacer clic en "Aprender Técnica"
+      learnButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const massageType = button.closest('.massage-type').dataset.massage;
+          showMassageDetails(massageType);
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+      
+      // Cerrar modal
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+      
+      // Cerrar modal al hacer clic fuera del contenido
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      // Cerrar modal con la tecla Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+      });
+    });
+    
+    // Mostrar detalles del masaje en el modal
+    function showMassageDetails(type) {
+      const technique = massageTechniques[type];
+      if (!technique) return;
+      
+      document.getElementById('modalTitle').textContent = technique.title;
+      document.getElementById('modalIcon').innerHTML = `<i class="${technique.icon}"></i>`;
+      document.getElementById('modalDescription').textContent = technique.description;
+      
+      // Pasos profesionales
+      const professionalStepsEl = document.getElementById('professionalSteps');
+      professionalStepsEl.innerHTML = '';
+      technique.professionalSteps.forEach(step => {
+        const li = document.createElement('p');
+        li.innerHTML = `<i class="fas fa-chevron-right"></i> ${step}`;
+        professionalStepsEl.appendChild(li);
+      });
+      
+      // Pasos caseros
+      document.getElementById('homemadeIntro').textContent = technique.homemadeIntro;
+      const homemadeStepsEl = document.getElementById('homemadeSteps');
+      homemadeStepsEl.innerHTML = '';
+      technique.homemadeSteps.forEach(step => {
+        const li = document.createElement('p');
+        li.innerHTML = `<i class="fas fa-chevron-right"></i> ${step}`;
+        homemadeStepsEl.appendChild(li);
+      });
+      
+      // Consejos
+      const tipsEl = document.getElementById('homemadeTips');
+      tipsEl.innerHTML = '';
+      technique.tips.forEach(tip => {
+        const li = document.createElement('li');
+        li.textContent = tip;
+        tipsEl.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editar Carrusel - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="editar-carousel.css">
+</head>
+<body>
+  <div class="loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div id="contenido" class="container animate__animated animate__fadeIn">
+    <header>
+      <h1><i class="fas fa-images"></i> Editar Carrusel</h1>
+      <p>Administra las imágenes y contenido del carrusel principal</p>
+    </header>
+
+    <div class="admin-section">
+      <div class="section-header">
+        <h2><i class="fas fa-sliders-h"></i> Slides Actuales</h2>
+        <button class="add-slide-btn" onclick="openAddSlideModal()">
+          <i class="fas fa-plus"></i> Agregar Nuevo Slide
+        </button>
+      </div>
+
+      <div class="slides-container" id="slidesContainer">
+        <!-- Los slides se cargarán dinámicamente aquí -->
+      </div>
+
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <i class="fas fa-images"></i>
+        <h3>No hay slides en el carrusel</h3>
+        <p>Agrega tu primer slide para comenzar</p>
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <!-- Modal para agregar/editar slide -->
+  <div class="modal" id="slideModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">
+        <i class="fas fa-times"></i>
+      </button>
+      
+      <div class="modal-header">
+        <h2 id="modalTitle"><i class="fas fa-plus-circle"></i> Agregar Nuevo Slide</h2>
+      </div>
+      
+      <div class="modal-body">
+        <form id="slideForm">
+          <input type="hidden" id="slideId">
+          <input type="hidden" id="imageDocId" name="imageDocId">
+          
+          <div class="form-group">
+            <label for="slideTitle">
+              <i class="fas fa-heading"></i> Título
+              <span class="required">*</span>
+            </label>
+            <input type="text" id="slideTitle" name="slideTitle" required placeholder="Ej: Bienestar Integral">
+          </div>
+
+          <div class="form-group">
+            <label for="slideDescription">
+              <i class="fas fa-align-left"></i> Descripción
+              <span class="required">*</span>
+            </label>
+            <textarea id="slideDescription" name="slideDescription" required placeholder="Descripción del slide..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="slideBadge">
+              <i class="fas fa-tag"></i> Badge / Etiqueta
+            </label>
+            <input type="text" id="slideBadge" name="slideBadge" placeholder="Ej: Premium, Popular, Nuevo">
+          </div>
+
+          <div class="form-group">
+            <label for="slideIcon">
+              <i class="fas fa-icons"></i> Icono (Font Awesome)
+            </label>
+            <input type="text" id="slideIcon" name="slideIcon" placeholder="fas fa-star" value="fas fa-star">
+            <small class="form-hint">Ej: fas fa-star, fas fa-heart, fas fa-moon</small>
+          </div>
+
+          <div class="form-group">
+            <label for="slideLink">
+              <i class="fas fa-link"></i> Enlace (opcional)
+            </label>
+            <input type="url" id="slideLink" name="slideLink" placeholder="https://ejemplo.com">
+          </div>
+
+          <div class="form-group">
+            <label for="slideOrder">
+              <i class="fas fa-sort"></i> Orden
+            </label>
+            <input type="number" id="slideOrder" name="slideOrder" min="0" value="0">
+            <small class="form-hint">Número más bajo = aparece primero</small>
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fas fa-image"></i> Imagen del Slide
+            </label>
+            <div class="image-preview-container">
+              <img id="imagePreview" class="preview-image" src="" alt="Vista previa">
+              <div class="upload-area" onclick="document.getElementById('slideImage').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Haz clic para subir una imagen</p>
+                <input type="file" id="slideImage" accept="image/*" onchange="previewImage(this)">
+              </div>
+            </div>
+          </div>
+          
+          <!-- Galería de imágenes existentes - ESTRUCTURA SIMPLE COMO EN TERRENOS -->
+          <div class="form-group">
+            <label><i class="fas fa-images"></i> Seleccionar imagen existente</label>
+            <div class="galeria" id="imageGallery">
+              <!-- Las imágenes se cargarán dinámicamente aquí -->
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" onclick="closeModal()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+        <button type="button" class="btn btn-save" onclick="saveSlide()">
+          <i class="fas fa-save"></i> Guardar Slide
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alertas -->
+  <div class="alert-container" id="alertContainer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    let currentSlideId = null;
+    let selectedImageId = null;
+
+    // Verificación de autenticación
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      checkAdminRole(user);
+    });
+
+    function checkAdminRole(user) {
+      db.collection('users').where('uid', '==', user.uid).get().then((snapshot) => {
+        if (!snapshot.empty) {
+          const userData = snapshot.docs[0].data();
+          if (userData.role !== 'admin') {
+            showAlert('No tienes permisos de administrador para acceder a esta página', 'error');
+            setTimeout(() => {
+              window.location.href = 'zenzandrelax.html';
+            }, 2000);
+          } else {
+            document.querySelector('.loader').style.display = 'none';
+            document.getElementById('contenido').style.display = 'block';
+            loadSlides();
+            loadImageGallery();
+          }
+        } else {
+          window.location.href = 'zenzandrelax.html';
+        }
+      }).catch((error) => {
+        console.error('Error al verificar rol:', error);
+        window.location.href = 'zenzandrelax.html';
+      });
+    }
+
+    // Cargar slides desde Firestore
+    function loadSlides() {
+      db.collection('carousel').orderBy('order', 'asc').get().then((snapshot) => {
+        const container = document.getElementById('slidesContainer');
+        const emptyState = document.getElementById('emptyState');
+        container.innerHTML = '';
+
+        if (snapshot.empty) {
+          emptyState.style.display = 'block';
+          return;
+        }
+
+        emptyState.style.display = 'none';
+
+        snapshot.forEach((doc) => {
+          const slide = doc.data();
+          createSlideCard(slide, doc.id);
+        });
+      }).catch((error) => {
+        console.error('Error al cargar slides:', error);
+        showAlert('Error al cargar los slides: ' + error.message, 'error');
+      });
+    }
+
+    // Crear tarjeta de slide
+    function createSlideCard(slide, slideId) {
+      const container = document.getElementById('slidesContainer');
+      const slideCard = document.createElement('div');
+      slideCard.className = 'slide-card';
+      
+      // Cargar imagen desde Firestore si existe
+      let imageHTML = '<i class="fas fa-image"></i>';
+      if (slide.imageDocId) {
+        imageHTML = `<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+                        alt="${slide.title || 'Sin título'}" 
+                        data-doc-id="${slide.imageDocId}" 
+                        class="slide-img-placeholder">`;
+      }
+      
+      slideCard.innerHTML = `
+        <div class="slide-image">
+          ${imageHTML}
+        </div>
+        <div class="slide-content">
+          <div class="slide-header">
+            <h3><i class="${slide.icon || 'fas fa-star'}"></i> ${slide.title || 'Sin título'}</h3>
+            ${slide.badge ? `<span class="slide-badge">${slide.badge}</span>` : ''}
+          </div>
+          <p class="slide-description">${slide.description || 'Sin descripción'}</p>
+          ${slide.link ? `<p class="slide-link"><i class="fas fa-link"></i> ${slide.link}</p>` : ''}
+          <div class="slide-meta">
+            <span><i class="fas fa-sort"></i> Orden: ${slide.order || 0}</span>
+            ${slide.imageDocId ? `<span><i class="fas fa-check-circle"></i> Imagen cargada</span>` : ''}
+          </div>
+        </div>
+        <div class="slide-actions">
+          <button class="slide-btn btn-edit" onclick="editSlide('${slideId}')">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+          <button class="slide-btn btn-delete" onclick="showDeleteConfirmation('${slideId}', '${slide.title || 'Sin título'}')">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </div>
+      `;
+      
+      container.appendChild(slideCard);
+      
+      // Si hay imagen, cargarla
+      if (slide.imageDocId) {
+        loadImageFromDocId(slide.imageDocId, slideCard.querySelector('.slide-img-placeholder'));
+      }
+    }
+
+    // Cargar imagen desde Firestore
+    async function loadImageFromDocId(docId, imgElement) {
+      try {
+        const imageDoc = await db.collection('images').doc(docId).get();
+        if (imageDoc.exists) {
+          const imgData = imageDoc.data();
+          // ✅ CORREGIDO: Añadido "data:" al inicio
+          const imageDataUrl = `data:${imgData.mimeType};base64,${imgData.imageData}`;
+          imgElement.src = imageDataUrl;
+        } else {
+          imgElement.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+        }
+      } catch (error) {
+        console.error("⚠️ Error al cargar imagen:", error);
+        imgElement.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+      }
+    }
+
+    // Cargar galería de imágenes existentes - ESTRUCTURA SIMPLE COMO EN TERRENOS
+    async function loadImageGallery() {
+      const galleryContainer = document.getElementById('imageGallery');
+      galleryContainer.innerHTML = '<div class="loading">Cargando imágenes...</div>';
+
+      try {
+        // Cargar imágenes desde la colección "images"
+        const imagesSnapshot = await db.collection('images').orderBy('uploadedAt', 'desc').get();
+        
+        if (imagesSnapshot.empty) {
+          galleryContainer.innerHTML = '<p class="info">📸 Sube tu primera imagen</p>';
+          return;
+        }
+
+        galleryContainer.innerHTML = '';
+        imagesSnapshot.forEach(doc => {
+          const { imageData, mimeType, filename } = doc.data();
+          const imgElement = document.createElement('img');
+          
+          // ✅ CORREGIDO: Añadido "data:"
+          imgElement.src = `data:${mimeType};base64,${imageData}`;
+          imgElement.alt = filename || 'Imagen del carrusel';
+          imgElement.className = 'miniatura'; // Usamos la misma clase que en terrenos
+          imgElement.title = filename || 'Imagen';
+          imgElement.onclick = () => selectImage(doc.id, imageData, mimeType);
+          galleryContainer.appendChild(imgElement);
+        });
+      } catch (error) {
+        console.error("❌ Error al cargar galería:", error);
+        galleryContainer.innerHTML = '<p class="error">Error al cargar imágenes</p>';
+      }
+    }
+
+    // Seleccionar imagen de la galería - ESTRUCTURA SIMPLE COMO EN TERRENOS
+    function selectImage(docId, imageData, mimeType) {
+      const miniaturas = document.querySelectorAll('.miniatura');
+      miniaturas.forEach(el => el.classList.remove('selected'));
+      
+      event.target.classList.add('selected');
+      document.getElementById('imageDocId').value = docId;
+      // ✅ CORREGIDO: Añadido "data:"
+      document.getElementById('imagePreview').src = `data:${mimeType};base64,${imageData}`;
+      document.getElementById('imagePreview').style.display = 'block';
+    }
+
+    // Abrir modal para agregar slide
+    function openAddSlideModal() {
+      currentSlideId = null;
+      selectedImageId = null;
+      document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Agregar Nuevo Slide';
+      document.getElementById('slideForm').reset();
+      document.getElementById('imagePreview').style.display = 'none';
+      document.getElementById('imageDocId').value = '';
+      
+      // Resaltar imagen seleccionada
+      const miniaturas = document.querySelectorAll('.miniatura');
+      miniaturas.forEach(thumb => thumb.classList.remove('selected'));
+      
+      document.getElementById('slideModal').classList.add('active');
+    }
+
+    // Cerrar modal
+    function closeModal() {
+      document.getElementById('slideModal').classList.remove('active');
+      document.getElementById('slideForm').reset();
+      currentSlideId = null;
+      selectedImageId = null;
+      document.getElementById('imagePreview').style.display = 'none';
+      document.getElementById('imageDocId').value = '';
+      
+      // Quitar selección de imágenes
+      const miniaturas = document.querySelectorAll('.miniatura');
+      miniaturas.forEach(thumb => thumb.classList.remove('selected'));
+    }
+
+    // Editar slide
+    function editSlide(slideId) {
+      db.collection('carousel').doc(slideId).get().then((doc) => {
+        if (doc.exists) {
+          const slide = doc.data();
+          currentSlideId = slideId;
+          
+          document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Editar Slide';
+          document.getElementById('slideId').value = slideId;
+          document.getElementById('slideTitle').value = slide.title || '';
+          document.getElementById('slideDescription').value = slide.description || '';
+          document.getElementById('slideBadge').value = slide.badge || '';
+          document.getElementById('slideIcon').value = slide.icon || 'fas fa-star';
+          document.getElementById('slideLink').value = slide.link || '';
+          document.getElementById('slideOrder').value = slide.order || 0;
+          document.getElementById('imageDocId').value = slide.imageDocId || '';
+          
+          if (slide.imageDocId) {
+            // Cargar imagen desde Firestore
+            loadImageFromDocId(slide.imageDocId, document.getElementById('imagePreview'));
+            document.getElementById('imagePreview').style.display = 'block';
+          } else {
+            document.getElementById('imagePreview').style.display = 'none';
+          }
+          
+          document.getElementById('slideModal').classList.add('active');
+        }
+      }).catch((error) => {
+        console.error('Error al cargar slide:', error);
+        showAlert('Error al cargar el slide', 'error');
+      });
+    }
+
+    // Vista previa de imagen
+    function previewImage(input) {
+      const preview = document.getElementById('imagePreview');
+      const file = input.files[0];
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          // Mostrar imagen en vista previa correctamente
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+          document.getElementById('imageDocId').value = '';
+          
+          // Quitar selección de imágenes
+          const miniaturas = document.querySelectorAll('.miniatura');
+          miniaturas.forEach(thumb => thumb.classList.remove('selected'));
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Guardar slide
+    async function saveSlide() {
+      const title = document.getElementById('slideTitle').value.trim();
+      const description = document.getElementById('slideDescription').value.trim();
+      const badge = document.getElementById('slideBadge').value.trim();
+      const icon = document.getElementById('slideIcon').value.trim();
+      const link = document.getElementById('slideLink').value.trim();
+      const order = parseInt(document.getElementById('slideOrder').value) || 0;
+      const imageFile = document.getElementById('slideImage').files[0];
+      const imageDocId = document.getElementById('imageDocId').value;
+
+      if (!title || !description) {
+        showAlert('Por favor completa todos los campos obligatorios (título y descripción)', 'error');
+        return;
+      }
+
+      try {
+        let newImageDocId = imageDocId;
+        
+        // Subir nueva imagen si existe
+        if (imageFile) {
+          // Convertir imagen a base64
+          const base64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(imageFile);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+          });
+
+          // Guardar en Firestore - CORRECCIÓN AQUÍ
+          const docRef = await db.collection('images').add({
+            imageData: base64,
+            mimeType: imageFile.type,
+            filename: imageFile.name,
+            uploadedAt: firebase.firestore.FieldValue.serverTimestamp() // CORRECCIÓN
+          });
+
+          // Almacenar el ID del documento de imagen
+          newImageDocId = docRef.id;
+        }
+
+        const slideData = {
+          title,
+          description,
+          badge: badge || '',
+          icon: icon || 'fas fa-star',
+          link: link || '',
+          order,
+          imageDocId: newImageDocId || '', // Almacenar el ID del documento de imagen
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        if (currentSlideId) {
+          // Editar slide existente
+          await db.collection('carousel').doc(currentSlideId).update(slideData);
+          showAlert('Slide actualizado exitosamente', 'success');
+        } else {
+          // Crear nuevo slide
+          await db.collection('carousel').add(slideData);
+          showAlert('Slide creado exitosamente', 'success');
+        }
+
+        closeModal();
+        loadSlides();
+      } catch (error) {
+        console.error('Error al guardar slide:', error);
+        showAlert('Error al guardar el slide: ' + error.message, 'error');
+      }
+    }
+
+    // Mostrar confirmación de eliminación
+    function showDeleteConfirmation(slideId, slideName) {
+      if (confirm(`¿Estás seguro de que quieres eliminar el slide "${slideName}"?\n\nEsta acción es irreversible.`)) {
+        deleteSlide(slideId);
+      }
+    }
+
+    // Eliminar slide
+    function deleteSlide(slideId) {
+  db.collection('carousel').doc(slideId).delete().then(() => {
+    showAlert('Slide eliminado exitosamente', 'success');
+    loadSlides();
+  }).catch((error) => {
+    console.error('Error al eliminar slide:', error);
+    showAlert('Error al eliminar el slide: ' + error.message, 'error');
+  });
+}
+
+    // Mostrar alerta mejorada
+    function showAlert(message, type = 'success') {
+      const container = document.getElementById('alertContainer');
+      
+      // Crear alerta
+      const alert = document.createElement('div');
+      alert.className = `alert-custom ${type} slide-in`;
+      
+      // Iconos según el tipo
+      const icons = {
+        success: '<i class="fas fa-check-circle"></i>',
+        error: '<i class="fas fa-exclamation-circle"></i>',
+        warning: '<i class="fas fa-exclamation-triangle"></i>',
+        info: '<i class="fas fa-info-circle"></i>'
+      };
+      
+      alert.innerHTML = `
+        <div class="alert-icon">${icons[type] || icons.info}</div>
+        <div class="alert-content">
+          <div class="alert-title">${type === 'success' ? 'Éxito' : type === 'error' ? 'Error' : type === 'warning' ? 'Advertencia' : 'Información'}</div>
+          <div class="alert-message">${message}</div>
+        </div>
+        <button class="alert-close" onclick="this.parentElement.remove()">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      
+      // Añadir al contenedor
+      container.appendChild(alert);
+      
+      // Remover después de 5 segundos
+      setTimeout(() => {
+        alert.classList.add('slide-out');
+        setTimeout(() => {
+          if (alert.parentNode) {
+            alert.parentNode.removeChild(alert);
+          }
+        }, 300);
+      }, 5000);
+    }
+
+    // Cerrar modal al hacer clic fuera
+    document.getElementById('slideModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('slideModal')) {
+        closeModal();
+      }
+    });
+
+    // Cerrar modal con tecla Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

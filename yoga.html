@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yoga - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="yoga.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-sun"></i> Estilos de Yoga</h1>
+      <p>Aprende diferentes estilos y cómo practicarlos correctamente</p>
+    </header>
+
+    <div class="yoga-hero">
+      <h2>El Camino del Equilibrio</h2>
+      <p>El yoga es mucho más que ejercicio físico; es una filosofía de vida que integra cuerpo, mente y espíritu. Descubre diferentes estilos y aprende a practicarlos con videos e imágenes instructivas.</p>
+    </div>
+
+    <!-- Mensaje informativo sobre el yoga -->
+    <div class="info-message">
+      <div class="info-icon">
+        <i class="fas fa-info-circle"></i>
+      </div>
+      <div class="info-content">
+        <h3><i class="fas fa-clock"></i> Tiempo y Paciencia en el Yoga</h3>
+        <p>El yoga es una práctica <strong>lenta y meditativa</strong> diseñada para la relajación profunda y la conexión mente-cuerpo. Los videos son extensos porque cada postura requiere tiempo para ser ejecutada correctamente y obtener sus beneficios completos.</p>
+        <p><i class="fas fa-lightbulb"></i> <strong>Recomendación:</strong> Practica yoga cuando tengas tiempo disponible sin prisas. Encuentra un momento tranquilo de tu día, prepara tu espacio y disfruta del proceso sin presión. La constancia es más importante que la duración.</p>
+      </div>
+    </div>
+
+    <div class="yoga-styles" id="yogaStylesContainer">
+      <!-- Los cards de yoga se cargarán dinámicamente aquí -->
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <!-- Botón de administrador (solo visible para admins) -->
+  <a href="editar-yoga.html" id="adminEditBtn" class="admin-edit-btn" style="display: none;">
+    <i class="fas fa-edit"></i>
+    <span>Editar Contenido</span>
+  </a>
+
+  <!-- Modal para detalles del yoga -->
+  <div class="modal" id="yogaModal">
+    <div class="modal-content">
+      <button class="close-modal">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="modal-header">
+        <h2 id="modalTitle">Estilo de Yoga</h2>
+        <div class="modal-icon" id="modalIcon">
+          <i class="fas fa-sun"></i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="media-section">
+          <div class="video-container" id="videoContainer">
+            <!-- Video se insertará aquí -->
+          </div>
+          <div class="video-info">
+            <p><i class="fas fa-info-circle"></i> <strong>Nota:</strong> Este video es una clase completa. Puedes avanzar o retroceder según tu nivel y tiempo disponible. Practica con paciencia y escucha a tu cuerpo.</p>
+          </div>
+          <div class="gallery-section" id="gallerySection">
+            <h3><i class="fas fa-images"></i> Posturas Clave</h3>
+            <div class="gallery-grid" id="galleryGrid">
+              <!-- Imágenes se insertarán aquí -->
+            </div>
+          </div>
+        </div>
+        <div class="technique-section">
+          <h3><i class="fas fa-info-circle"></i> ¿Qué es y para qué sirve?</h3>
+          <p id="modalDescription">Descripción del estilo de yoga.</p>
+        </div>
+        <div class="technique-section">
+          <h3><i class="fas fa-dumbbell"></i> Posturas Principales</h3>
+          <div id="posesList" class="poses-list"></div>
+        </div>
+        <div class="technique-section">
+          <h3><i class="fas fa-home"></i> Cómo Practicar en Casa</h3>
+          <p id="homePracticeIntro">Instrucciones para practicar en casa.</p>
+          <div id="homeSteps" class="steps-list"></div>
+          <div class="tips-box">
+            <h4><i class="fas fa-lightbulb"></i> Consejos Importantes:</h4>
+            <ul id="practiceTips"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDK Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Variable para almacenar los estilos de yoga
+    let yogaStyles = {};
+
+    // Cargar datos de yoga desde Firestore
+    async function loadYogaStyles() {
+      try {
+        const snapshot = await db.collection('yoga_styles').get();
+
+        if (snapshot.empty) {
+          console.warn('No se encontraron estilos de yoga en Firestore. Cargando valores por defecto...');
+          await createDefaultYogaData();
+          return loadYogaStyles(); // Recargar después de crear defaults
+        }
+
+        yogaStyles = {};
+        snapshot.forEach(doc => {
+          yogaStyles[doc.id] = doc.data();
+        });
+
+        console.log('Estilos de yoga cargados:', yogaStyles);
+        renderYogaCards(); // Renderizar los cards
+
+      } catch (error) {
+        console.error('Error al cargar estilos de yoga:', error);
+        alert('Error al cargar el contenido. Por favor recarga la página.');
+      }
+    }
+
+    // Crear datos por defecto si no existen
+    async function createDefaultYogaData() {
+      const defaultStyles = {
+        hatha: {
+          title: "Hatha Yoga",
+          icon: "fas fa-fire",
+          description: "Hatha Yoga es el estilo más tradicional y accesible, perfecto para principiantes. Se enfoca en la alineación correcta del cuerpo, la respiración consciente y la meditación.",
+          videoUrl: "https://www.youtube.com/embed/vd1j1nqHhuY",
+          galleryImages: [
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1545109579-3d84f2c94c38?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1544717302-de2204664990?w=400&h=400&fit=crop"
+          ],
+          poses: [
+            "Montaña (Tadasana) - Postura de pie básica",
+            "Perro boca abajo (Adho Mukha Svanasana) - Estira espalda",
+            "Guerrero I (Virabhadrasana I) - Fortalece piernas"
+          ],
+          homeIntro: "Para practicar Hatha Yoga en casa, necesitas poco equipo y mucho espacio.",
+          homeSteps: [
+            "Prepara tu espacio con una esterilla",
+            "Comienza con 5-10 minutos de respiración",
+            "Realiza cada postura entre 30 segundos y 2 minutos"
+          ],
+          tips: [
+            "No fuerces las posturas",
+            "Mantén la respiración fluida",
+            "Escucha a tu cuerpo"
+          ]
+        },
+        vinyasa: {
+          title: "Vinyasa Flow",
+          icon: "fas fa-tint",
+          description: "Vinyasa Flow es un estilo dinámico que conecta las posturas mediante un flujo continuo sincronizado con la respiración.",
+          videoUrl: "https://www.youtube.com/embed/134Dtv1ehqw",
+          galleryImages: [
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1545109579-3d84f2c94c38?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1544717302-de2204664990?w=400&h=400&fit=crop"
+          ],
+          poses: [
+            "Saludo al sol (Surya Namaskar)",
+            "Tabla (Phalakasana)",
+            "Chaturanga"
+          ],
+          homeIntro: "Para practicar Vinyasa Flow en casa necesitas energía y espacio.",
+          homeSteps: [
+            "Calienta bien antes de comenzar",
+            "Sincroniza cada movimiento con tu respiración",
+            "Comienza con secuencias cortas"
+          ],
+          tips: [
+            "La respiración es más importante que la perfección",
+            "No saltes posturas de calentamiento",
+            "Hidrátate bien"
+          ]
+        },
+        yin: {
+          title: "Yin Yoga",
+          icon: "fas fa-snowflake",
+          description: "Yin Yoga es una práctica pasiva que mantiene posturas durante 3-5 minutos para alcanzar los tejidos conectivos profundos.",
+          videoUrl: "https://www.youtube.com/embed/YIaZ-v76rvk",
+          galleryImages: [
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1545109579-3d84f2c94c38?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1544717302-de2204664990?w=400&h=400&fit=crop"
+          ],
+          poses: [
+            "Postura del dragón (Dragon Pose)",
+            "Mariposa (Butterfly)",
+            "Postura del sastre (Sukhasana)"
+          ],
+          homeIntro: "Para practicar Yin Yoga en casa necesitas paciencia y comodidad.",
+          homeSteps: [
+            "Prepara tu espacio con mantas y cojines",
+            "Viste ropa abrigada",
+            "Mantén cada postura entre 3-5 minutos"
+          ],
+          tips: [
+            "Nunca fuerces una postura",
+            "Respira profundamente",
+            "Practica en una habitación cálida"
+          ]
+        },
+        restorative: {
+          title: "Yoga Restaurativo",
+          icon: "fas fa-leaf",
+          description: "Yoga Restaurativo es una práctica terapéutica que utiliza accesorios para apoyar completamente el cuerpo en posturas de descanso.",
+          videoUrl: "https://www.youtube.com/embed/2jqyPWn99E4",
+          galleryImages: [
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1545109579-3d84f2c94c38?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1544717302-de2204664990?w=400&h=400&fit=crop"
+          ],
+          poses: [
+            "Postura de la pierna en la pared",
+            "Postura del pez con apoyo",
+            "Postura del niño con cojín"
+          ],
+          homeIntro: "Para practicar Yoga Restaurativo en casa necesitas muchos accesorios.",
+          homeSteps: [
+            "Reúne mantas gruesas y almohadas",
+            "Crea un ambiente tranquilo",
+            "Mantén cada postura entre 5-15 minutos"
+          ],
+          tips: [
+            "La comodidad es primordial",
+            "Cubre tu cuerpo con una manta",
+            "Usa un ojo tapa"
+          ]
+        },
+        ashtanga: {
+          title: "Ashtanga Yoga",
+          icon: "fas fa-bolt",
+          description: "Ashtanga Yoga es un sistema tradicional de secuencias progresivas que sigue un orden específico establecido por Pattabhi Jois.",
+          videoUrl: "https://www.youtube.com/embed/pKDEmgr9DgA",
+          galleryImages: [
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1545109579-3d84f2c94c38?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1544717302-de2204664990?w=400&h=400&fit=crop"
+          ],
+          poses: [
+            "Serie Primaria (Yoga Chikitsa)",
+            "Serie Intermedia (Nadi Shodhana)",
+            "Serie Avanzada (Sthira Bhaga)"
+          ],
+          homeIntro: "Para practicar Ashtanga Yoga en casa necesitas disciplina y compromiso.",
+          homeSteps: [
+            "Aprende la secuencia completa",
+            "Practica siempre en el mismo orden",
+            "Comienza con la Serie Primaria"
+          ],
+          tips: [
+            "No saltes posturas",
+            "La respiración Ujjayi es esencial",
+            "Sé paciente"
+          ]
+        },
+        back: {
+          title: "Yoga para la Espalda",
+          icon: "fas fa-heart",
+          description: "Yoga para la Espalda es un enfoque terapéutico que utiliza posturas específicas para aliviar el dolor lumbar y mejorar la postura.",
+          videoUrl: "https://www.youtube.com/embed/zkYW-Sc22MI",
+          galleryImages: [
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1545109579-3d84f2c94c38?w=400&h=400&fit=crop",
+            "https://images.unsplash.com/photo-1544717302-de2204664990?w=400&h=400&fit=crop"
+          ],
+          poses: [
+            "Postura del gato-vaca (Marjaryasana-Bitilasana)",
+            "Postura del niño (Balasana)",
+            "Postura del puente (Setu Bandhasana)"
+          ],
+          homeIntro: "Para practicar Yoga para la Espalda en casa necesitas cuidado y atención.",
+          homeSteps: [
+            "Comienza con un calentamiento suave",
+            "Mueve la espalda lentamente",
+            "Enfócate en la alineación correcta"
+          ],
+          tips: [
+            "Mantén el core activo",
+            "Respira profundamente",
+            "No practiques si tienes dolor agudo"
+          ]
+        }
+      };
+
+      const batch = db.batch();
+      Object.entries(defaultStyles).forEach(([key, value]) => {
+        batch.set(db.collection('yoga_styles').doc(key), value);
+      });
+      await batch.commit();
+      console.log('Datos por defecto creados en Firestore');
+    }
+
+    // Renderizar los cards de yoga dinámicamente
+    function renderYogaCards() {
+      const container = document.getElementById('yogaStylesContainer');
+      container.innerHTML = '';
+
+      Object.entries(yogaStyles).forEach(([key, data]) => {
+        // Tomar solo la primera oración o los primeros 150 caracteres
+        const shortDesc = data.description.split('.')[0] + '.';
+        const iconClass = data.icon || 'fas fa-sun';
+
+        const cardHTML = `
+          <div class="yoga-card" data-yoga="${key}">
+            <div class="yoga-header">
+              <div class="yoga-icon">
+                <i class="${iconClass}"></i>
+              </div>
+              <h2>${data.title || key}</h2>
+            </div>
+            <p>${shortDesc}</p>
+            <button class="learn-btn">
+              <i class="fas fa-play-circle"></i> Ver Tutorial
+            </button>
+          </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', cardHTML);
+      });
+
+      // Añadir event listeners a los botones después de renderizar
+      document.querySelectorAll('.learn-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const yogaType = button.closest('.yoga-card').dataset.yoga;
+          showYogaDetails(yogaType);
+          document.getElementById('yogaModal').classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+    }
+
+    // Verificar autenticación y rol de administrador
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Verificar si es administrador
+      db.collection('users').where('uid', '==', user.uid).get()
+        .then((snapshot) => {
+          if (!snapshot.empty) {
+            const userData = snapshot.docs[0].data();
+            if (userData.role === 'admin') {
+              document.getElementById('adminEditBtn').style.display = 'flex';
+            }
+          }
+
+          // Cargar estilos de yoga después de autenticación
+          loadYogaStyles();
+        })
+        .catch((error) => {
+          console.error('Error al verificar rol:', error);
+          loadYogaStyles(); // Cargar yoga aunque falle la verificación de rol
+        });
+    });
+
+    // Mostrar detalles del yoga en el modal
+    function showYogaDetails(type) {
+      const style = yogaStyles[type];
+      if (!style) {
+        console.error('Estilo no encontrado:', type);
+        alert('No se encontró información para este estilo de yoga.');
+        return;
+      }
+
+      document.getElementById('modalTitle').textContent = style.title || type;
+      document.getElementById('modalIcon').innerHTML = `<i class="${style.icon || 'fas fa-sun'}"></i>`;
+      document.getElementById('modalDescription').textContent = style.description || 'Descripción no disponible.';
+
+      // Insertar video con controles y autoplay
+      const videoContainer = document.getElementById('videoContainer');
+      videoContainer.innerHTML = `
+        <div class="video-wrapper">
+          <iframe
+            src="${style.videoUrl || ''}?rel=0&modestbranding=1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            title="Video de ${style.title || type}">
+          </iframe>
+        </div>
+      `;
+
+      // Insertar imágenes de la galería
+      const galleryGrid = document.getElementById('galleryGrid');
+      galleryGrid.innerHTML = '';
+      const images = style.galleryImages || [];
+      images.forEach(imgUrl => {
+        if (imgUrl) {
+          const imgDiv = document.createElement('div');
+          imgDiv.className = 'gallery-item';
+          imgDiv.innerHTML = `<img src="${imgUrl}" alt="Postura de ${style.title || type}">`;
+          galleryGrid.appendChild(imgDiv);
+        }
+      });
+
+      // Posturas principales
+      const posesList = document.getElementById('posesList');
+      posesList.innerHTML = '';
+      const poses = style.poses || [];
+      poses.forEach(pose => {
+        if (pose) {
+          const li = document.createElement('p');
+          li.innerHTML = `<i class="fas fa-yoga"></i> ${pose}`;
+          posesList.appendChild(li);
+        }
+      });
+
+      // Práctica en casa
+      document.getElementById('homePracticeIntro').textContent = style.homeIntro || 'Instrucciones no disponibles.';
+      const homeSteps = document.getElementById('homeSteps');
+      homeSteps.innerHTML = '';
+      const steps = style.homeSteps || [];
+      steps.forEach(step => {
+        if (step) {
+          const li = document.createElement('p');
+          li.innerHTML = `<i class="fas fa-chevron-right"></i> ${step}`;
+          homeSteps.appendChild(li);
+        }
+      });
+
+      // Consejos
+      const tips = document.getElementById('practiceTips');
+      tips.innerHTML = '';
+      const tipsList = style.tips || [];
+      tipsList.forEach(tip => {
+        if (tip) {
+          const li = document.createElement('li');
+          li.textContent = tip;
+          tips.appendChild(li);
+        }
+      });
+    }
+
+    // Funcionalidad del modal
+    document.addEventListener('DOMContentLoaded', () => {
+      const modal = document.getElementById('yogaModal');
+      const closeModalBtn = document.querySelector('.close-modal');
+
+      // Cerrar modal
+      closeModalBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        // Pausar video al cerrar modal
+        const iframe = document.querySelector('#videoContainer iframe');
+        if (iframe) iframe.src = iframe.src;
+      });
+
+      // Cerrar modal al hacer clic fuera del contenido
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto';
+          // Pausar video al cerrar modal
+          const iframe = document.querySelector('#videoContainer iframe');
+          if (iframe) iframe.src = iframe.src;
+        }
+      });
+
+      // Cerrar modal con la tecla Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          modal.classList.remove('active');
+          document.body.style.overflow = 'auto';
+          // Pausar video al cerrar modal
+          const iframe = document.querySelector('#videoContainer iframe');
+          if (iframe) iframe.src = iframe.src;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

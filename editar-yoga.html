@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Editar Yoga - ZenzAndRelax</title>
+    <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="editar-yoga.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <div class="header-content">
+                <h1><i class="fas fa-yoga"></i> Panel de Administración - Yoga</h1>
+                <p>Gestiona los estilos de yoga y su contenido</p>
+            </div>
+            <a href="yoga.html" class="back-to-site">
+                <i class="fas fa-arrow-left"></i> Volver a Yoga
+            </a>
+        </header>
+
+        <main class="admin-main">
+            <!-- Sidebar -->
+            <aside class="admin-sidebar">
+                <div class="sidebar-header">
+                    <i class="fas fa-list"></i> Estilos de Yoga
+                </div>
+                <div class="sidebar-top-actions">
+                    <button class="add-style-btn" onclick="showAddStyleModal()">
+                        <i class="fas fa-plus"></i> Agregar Nuevo Estilo
+                    </button>
+                </div>
+                <div class="sidebar-nav" id="sidebarNav">
+                    <!-- Los estilos se cargarán aquí dinámicamente -->
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div class="admin-content">
+                <div class="content-header">
+                    <h2 id="currentStyleTitle">Selecciona un estilo para editar</h2>
+                    <div class="content-actions">
+                        <button class="btn-preview" onclick="previewStyle()">
+                            <i class="fas fa-eye"></i> Vista Previa
+                        </button>
+                        <button class="btn-save" onclick="saveStyle()">
+                            <i class="fas fa-save"></i> Guardar Cambios
+                        </button>
+                        <button class="btn-delete-style" id="deleteStyleBtn" onclick="showDeleteConfirmation()" style="display: none;">
+                            <i class="fas fa-trash"></i> Eliminar Estilo
+                        </button>
+                    </div>
+                </div>
+
+                <form class="edit-form" id="editForm" style="display: none;">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Información Básica</h3>
+                        <p class="section-description">Completa la información general del estilo de yoga.</p>
+                        <div class="form-group">
+                            <label for="styleTitle">
+                                <i class="fas fa-heading"></i> Título del Estilo
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="styleTitle" placeholder="Ej: Hatha Yoga" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="styleIcon">
+                                <i class="fas fa-icons"></i> Ícono (Clase Font Awesome)
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="styleIcon" placeholder="Ej: fas fa-fire" required>
+                            <small class="form-hint">Puedes usar cualquier ícono de Font Awesome 6.4.0</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="styleDescription">
+                                <i class="fas fa-align-left"></i> Descripción
+                                <span class="required">*</span>
+                            </label>
+                            <textarea id="styleDescription" rows="4" placeholder="Describe el estilo de yoga..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-video"></i> Video Tutorial</h3>
+                        <p class="section-description">URL del video de YouTube (embed).</p>
+                        <div class="form-group">
+                            <label for="videoUrl">
+                                <i class="fas fa-link"></i> URL del Video
+                                <span class="required">*</span>
+                            </label>
+                            <input type="url" id="videoUrl" placeholder="https://www.youtube.com/embed/..." required>
+                        </div>
+                        <div class="video-preview" id="videoPreview" style="display: none;">
+                            <h4><i class="fas fa-play-circle"></i> Vista Previa del Video</h4>
+                            <div class="video-container" id="videoPreviewContainer">
+                                <!-- Video preview se insertará aquí -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-images"></i> Galería de Imágenes</h3>
+                        <p class="section-description">Imágenes que mostrarán las posturas clave.</p>
+                        
+                        <!-- Sección de imágenes actuales -->
+                        <div id="currentImagesSection">
+                            <h4><i class="fas fa-images"></i> Imágenes actuales</h4>
+                            <div class="current-images" id="currentImagesContainer">
+                                <!-- Las imágenes actuales se cargarán aquí dinámicamente -->
+                            </div>
+                        </div>
+
+                        <!-- Subir nuevas imágenes -->
+                        <div class="form-group">
+                            <label for="imageUpload">Subir nueva imagen (solo texto)</label>
+                            <input type="file" id="imageUpload" accept="image/*" class="file-input" style="display: none;">
+                            <button type="button" class="btn-upload" onclick="document.getElementById('imageUpload').click()">
+                                <i class="fas fa-cloud-upload-alt"></i> Buscar imágenes
+                            </button>
+                            <div class="upload-instructions">
+                                <i class="fas fa-info-circle"></i>
+                                Se almacena como texto en Firestore
+                            </div>
+                        </div>
+
+                        <!-- Seleccionar imágenes existentes -->
+                        <div class="form-group">
+                            <label><i class="fas fa-th-large"></i> Seleccionar imagen existente</label>
+                            <div class="galeria" id="galeria-container">
+                                <!-- Las imágenes existentes se cargarán dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-dumbbell"></i> Posturas Principales</h3>
+                        <p class="section-description">Lista de posturas importantes para este estilo.</p>
+                        <div class="poses-editor" id="posesEditor">
+                            <!-- Las posturas se agregarán aquí dinámicamente -->
+                        </div>
+                        <button type="button" class="btn-add" onclick="addPose()">
+                            <i class="fas fa-plus"></i> Agregar Postura
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-home"></i> Práctica en Casa</h3>
+                        <p class="section-description">Instrucciones para practicar en casa.</p>
+                        <div class="form-group">
+                            <label for="homeIntro">
+                                <i class="fas fa-info-circle"></i> Introducción
+                                <span class="required">*</span>
+                            </label>
+                            <textarea id="homeIntro" rows="3" placeholder="Instrucciones generales para practicar en casa..." required></textarea>
+                        </div>
+                        <h4><i class="fas fa-list-ol"></i> Pasos para Practicar</h4>
+                        <div class="steps-editor" id="stepsEditor">
+                            <!-- Los pasos se agregarán aquí dinámicamente -->
+                        </div>
+                        <button type="button" class="btn-add" onclick="addStep()">
+                            <i class="fas fa-plus"></i> Agregar Paso
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-lightbulb"></i> Consejos Importantes</h3>
+                        <p class="section-description">Consejos adicionales para la práctica.</p>
+                        <div class="tips-editor" id="tipsEditor">
+                            <!-- Los consejos se agregarán aquí dinámicamente -->
+                        </div>
+                        <button type="button" class="btn-add" onclick="addTip()">
+                            <i class="fas fa-plus"></i> Agregar Consejo
+                        </button>
+                    </div>
+                </form>
+
+                <div class="empty-state" id="emptyState">
+                    <i class="fas fa-yoga"></i>
+                    <h3>Selecciona un Estilo de Yoga</h3>
+                    <p>Haz clic en un estilo de la barra lateral para comenzar a editar</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para agregar nuevo estilo -->
+    <div class="modal" id="addStyleModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('addStyleModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Agregar Nuevo Estilo de Yoga</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newStyleId">
+                        <i class="fas fa-key"></i> ID del Estilo (sin espacios)
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" id="newStyleId" placeholder="Ej: hatha, vinyasa, yin" required>
+                    <small class="form-hint">Este será el identificador único del estilo</small>
+                </div>
+                <div class="form-group">
+                    <label for="newStyleTitle">
+                        <i class="fas fa-heading"></i> Título del Estilo
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" id="newStyleTitle" placeholder="Ej: Hatha Yoga" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addStyleModal')">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="btn btn-primary" onclick="createNewStyle()">
+                    <i class="fas fa-plus"></i> Crear Estilo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación para Eliminar -->
+    <div class="modal" id="deleteConfirmModal">
+        <div class="modal-content delete-modal">
+            <button class="close-modal" onclick="closeModal('deleteConfirmModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header delete-header">
+                <i class="fas fa-exclamation-triangle warning-icon"></i>
+                <h2>¿Eliminar Estilo de Yoga?</h2>
+            </div>
+            <div class="modal-body delete-body">
+                <div class="warning-message">
+                    <p><strong>⚠️ Esta acción es irreversible</strong></p>
+                    <p>Estás a punto de eliminar permanentemente el estilo <strong id="deleteStyleName" style="color: #9370DB;"></strong>.</p>
+                    <p>Toda la información asociada (descripción, video, imágenes, posturas, etc.) se perderá.</p>
+                </div>
+                <div class="confirmation-prompt">
+                    <p>Escribe <strong style="color: #DC3545; font-weight: bold;">"ELIMINAR"</strong> para confirmar:</p>
+                    <input type="text" id="deleteConfirmationInput" placeholder="ELIMINAR" class="delete-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('deleteConfirmModal')">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button class="btn btn-delete" id="confirmDeleteBtn" onclick="deleteStyle()" disabled>
+                    <i class="fas fa-trash"></i> Eliminar Permanentemente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Vista Previa -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content preview-modal">
+            <button class="close-modal" onclick="closeModal('previewModal')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <h2><i class="fas fa-eye"></i> Vista Previa - <span id="previewTitle"></span></h2>
+            </div>
+            <div class="modal-body">
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <i id="previewIcon" class="fas fa-sun"></i>
+                        <h3 id="previewTitleCard"></h3>
+                    </div>
+                    <p id="previewDescription"></p>
+                    <div class="preview-video" id="previewVideoContainer">
+                        <!-- Video preview -->
+                    </div>
+                    <div class="preview-section">
+                        <h4><i class="fas fa-images"></i> Posturas Clave</h4>
+                        <div id="previewGallery"></div>
+                    </div>
+                    <div class="preview-section">
+                        <h4><i class="fas fa-dumbbell"></i> Posturas Principales</h4>
+                        <div id="previewPoses"></div>
+                    </div>
+                    <div class="preview-section">
+                        <h4><i class="fas fa-home"></i> Cómo Practicar en Casa</h4>
+                        <p id="previewHomeIntro"></p>
+                        <div id="previewSteps"></div>
+                    </div>
+                    <div class="preview-section">
+                        <h4><i class="fas fa-lightbulb"></i> Consejos Importantes</h4>
+                        <ul id="previewTips"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alertas Mejoradas -->
+    <div class="alert-container" id="alertContainer"></div>
+
+    <!-- SDK Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+            authDomain: "zenzandrelax.firebaseapp.com",
+            projectId: "zenzandrelax",
+            storageBucket: "zenzandrelax.firebasestorage.app",
+            messagingSenderId: "109863701908",
+            appId: "1:109863701908:web:9223d4b23599eca7215381"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Variables globales
+        let yogaStyles = {};
+        let currentStyleId = null;
+
+        // Verificar autenticación
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            // Verificar rol de administrador
+            db.collection('users').where('uid', '==', user.uid).get()
+                .then((snapshot) => {
+                    if (snapshot.empty || snapshot.docs[0].data().role !== 'admin') {
+                        window.location.href = 'yoga.html';
+                        return;
+                    }
+                    loadYogaStyles();
+                })
+                .catch((error) => {
+                    console.error('Error al verificar rol:', error);
+                    window.location.href = 'yoga.html';
+                });
+        });
+
+        // Cargar estilos de yoga
+        async function loadYogaStyles() {
+            try {
+                const snapshot = await db.collection('yoga_styles').get();
+                yogaStyles = {};
+                snapshot.forEach(doc => {
+                    yogaStyles[doc.id] = doc.data();
+                });
+                renderSidebar();
+            } catch (error) {
+                console.error('Error al cargar estilos:', error);
+                showAlert('Error al cargar los estilos de yoga', 'error');
+            }
+        }
+
+        // Renderizar sidebar
+        function renderSidebar() {
+            const nav = document.getElementById('sidebarNav');
+            nav.innerHTML = '';
+            if (Object.keys(yogaStyles).length === 0) {
+                nav.innerHTML = '<div class="empty-sidebar">No hay estilos de yoga</div>';
+                return;
+            }
+            
+            Object.entries(yogaStyles).forEach(([id, data]) => {
+                const item = document.createElement('div');
+                item.className = 'nav-item-wrapper';
+                
+                // Si no hay título, mostrar "Sin título" con estilo especial
+                const displayName = data.title || id;
+                const titleDisplay = data.title ? 
+                    `<span class="nav-item-title">${displayName}</span>` : 
+                    `<span class="nav-item-title no-title">Sin título (${id})</span>`;
+                
+                item.innerHTML = `
+                    <button class="nav-item ${currentStyleId === id ? 'active' : ''}" onclick="selectStyle('${id}')">
+                        <i class="${data.icon || 'fas fa-yoga'}"></i>
+                        ${titleDisplay}
+                    </button>
+                    <button class="btn-delete-sidebar" title="Eliminar estilo ${displayName}" onclick="confirmDeleteStyle('${id}', '${displayName}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                nav.appendChild(item);
+            });
+        }
+
+        // Seleccionar estilo
+        async function selectStyle(styleId) {
+            currentStyleId = styleId;
+            const style = yogaStyles[styleId];
+            
+            // Actualizar título
+            document.getElementById('currentStyleTitle').textContent = `Editando: ${style.title || styleId}`;
+            
+            // Mostrar formulario y botón de eliminar
+            document.getElementById('editForm').style.display = 'block';
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('deleteStyleBtn').style.display = 'block';
+            
+            // Llenar formulario
+            document.getElementById('styleTitle').value = style.title || '';
+            document.getElementById('styleIcon').value = style.icon || 'fas fa-sun';
+            document.getElementById('styleDescription').value = style.description || '';
+            document.getElementById('videoUrl').value = style.videoUrl || '';
+            document.getElementById('homeIntro').value = style.homeIntro || '';
+            
+            // Actualizar sidebar
+            renderSidebar();
+            
+            // Cargar posturas
+            loadPosesEditor(style.poses || []);
+            
+            // Cargar pasos
+            loadStepsEditor(style.homeSteps || []);
+            
+            // Cargar consejos
+            loadTipsEditor(style.tips || []);
+            
+            // Mostrar preview del video
+            updateVideoPreview();
+            
+            // Cargar imágenes y galería
+            await loadCurrentImages(style.galleryImages || []);
+            await loadGaleriaDinamica();
+        }
+
+        // Cargar imágenes actuales
+        async function loadCurrentImages(imageIds) {
+            const container = document.getElementById('currentImagesContainer');
+            container.innerHTML = '';
+            
+            if (!imageIds || imageIds.length === 0) {
+                container.innerHTML = '<p class="info">No hay imágenes cargadas</p>';
+                return;
+            }
+            
+            // Procesar imágenes en paralelo y mantener orden
+            const imagePromises = imageIds.map(async (imageId) => {
+                try {
+                    const imageDoc = await db.collection('images').doc(imageId).get();
+                    if (imageDoc.exists) {
+                        const imgData = imageDoc.data();
+                        const imgElement = document.createElement('div');
+                        imgElement.className = 'image-item';
+                        imgElement.innerHTML = `
+                            <img src="data:${imgData.mimeType};base64,${imgData.imageData}"
+                                 alt="Imagen de yoga" class="current-image">
+                            <button class="btn-remove-image" onclick="removeCurrentImage('${imageId}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        `;
+                        return imgElement;
+                    }
+                    return null;
+                } catch (error) {
+                    console.error("⚠️ Error al cargar imagen:", error);
+                    return null;
+                }
+            });
+            
+            // Esperar todas las imágenes y agregarlas al contenedor
+            const imageElements = await Promise.all(imagePromises);
+            imageElements.filter(el => el).forEach(el => container.appendChild(el));
+        }
+
+        // Eliminar imagen actual
+        function removeCurrentImage(imageId) {
+            const style = yogaStyles[currentStyleId];
+            const newGalleryImages = style.galleryImages.filter(id => id !== imageId);
+            yogaStyles[currentStyleId].galleryImages = newGalleryImages;
+            loadCurrentImages(newGalleryImages);
+            showAlert('Imagen eliminada exitosamente', 'success');
+        }
+
+        // Cargar galería dinámica
+        async function loadGaleriaDinamica() {
+            const galeriaContainer = document.getElementById('galeria-container');
+            galeriaContainer.innerHTML = '<div class="loading">Cargando imágenes...</div>';
+            
+            try {
+                const imagesSnapshot = await db.collection('images').orderBy('uploadedAt', 'desc').get();
+                if (imagesSnapshot.empty) {
+                    galeriaContainer.innerHTML = '<p class="info">📸 Sube tu primera imagen</p>';
+                    return;
+                }
+                
+                galeriaContainer.innerHTML = '';
+                imagesSnapshot.forEach(doc => {
+                    const { imageData, mimeType, filename } = doc.data();
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `data:${mimeType};base64,${imageData}`;
+                    imgElement.alt = filename;
+                    imgElement.className = 'miniatura';
+                    imgElement.title = filename;
+                    imgElement.onclick = () => seleccionarImagen(doc.id, imageData, mimeType);
+                    galeriaContainer.appendChild(imgElement);
+                });
+            } catch (error) {
+                console.error("❌ Error al cargar galería:", error);
+                galeriaContainer.innerHTML = '<p class="error">Error al cargar imágenes</p>';
+            }
+        }
+
+        // Seleccionar imagen
+        function seleccionarImagen(docId, imageData, mimeType) {
+            const miniaturas = document.querySelectorAll('.miniatura');
+            miniaturas.forEach(el => el.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            // Añadir la imagen a la galería actual
+            const estilo = yogaStyles[currentStyleId];
+            if (!estilo.galleryImages) estilo.galleryImages = [];
+            
+            // Evitar duplicados
+            if (!estilo.galleryImages.includes(docId)) {
+                estilo.galleryImages.push(docId);
+                loadCurrentImages(estilo.galleryImages);
+                showAlert('Imagen agregada a la galería', 'success');
+            }
+        }
+
+        // Manejar subida de imágenes
+        document.getElementById('imageUpload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            try {
+                // Convertir imagen a base64
+                const base64 = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result.split(',')[1]);
+                    reader.onerror = error => reject(error);
+                });
+                
+                // Guardar en Firestore
+                const docRef = await db.collection('images').add({
+                    imageData: base64,
+                    mimeType: file.type,
+                    filename: file.name,
+                    uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                showAlert("✅ Imagen guardada como texto en Firestore", "success");
+                await loadGaleriaDinamica();
+                
+                // Seleccionar automáticamente la imagen subida
+                const estilo = yogaStyles[currentStyleId];
+                if (!estilo.galleryImages) estilo.galleryImages = [];
+                if (!estilo.galleryImages.includes(docRef.id)) {
+                    estilo.galleryImages.push(docRef.id);
+                    loadCurrentImages(estilo.galleryImages);
+                }
+            } catch (error) {
+                console.error("❌ Error al convertir imagen:", error);
+                showAlert("Error: " + error.message, "error");
+            }
+        });
+
+        // Cargar editor de posturas
+        function loadPosesEditor(poses) {
+            const container = document.getElementById('posesEditor');
+            container.innerHTML = '';
+            poses.forEach((pose, index) => {
+                addPose(pose, index);
+            });
+            if (poses.length === 0) {
+                addPose();
+            }
+        }
+
+        // Agregar postura
+        function addPose(text = '', index = null) {
+            const container = document.getElementById('posesEditor');
+            const indexValue = index !== null ? index : container.children.length;
+            const item = document.createElement('div');
+            item.className = 'list-item-editor';
+            item.innerHTML = `
+                <div class="item-input-wrapper">
+                    <input type="text" placeholder="Ej: Montaña (Tadasana) - Postura de pie básica" value="${text}">
+                    ${indexValue > 0 ? '<button type="button" class="btn-remove-item" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>' : ''}
+                </div>
+            `;
+            container.appendChild(item);
+        }
+
+        // Cargar editor de pasos
+        function loadStepsEditor(steps) {
+            const container = document.getElementById('stepsEditor');
+            container.innerHTML = '';
+            steps.forEach((step, index) => {
+                addStep(step, index);
+            });
+            if (steps.length === 0) {
+                addStep();
+            }
+        }
+
+        // Agregar paso
+        function addStep(text = '', index = null) {
+            const container = document.getElementById('stepsEditor');
+            const indexValue = index !== null ? index : container.children.length;
+            const item = document.createElement('div');
+            item.className = 'list-item-editor';
+            item.innerHTML = `
+                <div class="item-input-wrapper">
+                    <input type="text" placeholder="Ej: Prepara tu espacio con una esterilla" value="${text}">
+                    ${indexValue > 0 ? '<button type="button" class="btn-remove-item" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>' : ''}
+                </div>
+            `;
+            container.appendChild(item);
+        }
+
+        // Cargar editor de consejos
+        function loadTipsEditor(tips) {
+            const container = document.getElementById('tipsEditor');
+            container.innerHTML = '';
+            tips.forEach((tip, index) => {
+                addTip(tip, index);
+            });
+            if (tips.length === 0) {
+                addTip();
+            }
+        }
+
+        // Agregar consejo
+        function addTip(text = '', index = null) {
+            const container = document.getElementById('tipsEditor');
+            const indexValue = index !== null ? index : container.children.length;
+            const item = document.createElement('div');
+            item.className = 'list-item-editor';
+            item.innerHTML = `
+                <div class="item-input-wrapper">
+                    <input type="text" placeholder="Ej: No fuerces las posturas" value="${text}">
+                    ${indexValue > 0 ? '<button type="button" class="btn-remove-item" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>' : ''}
+                </div>
+            `;
+            container.appendChild(item);
+        }
+
+        // Eliminar item
+        function removeItem(btn) {
+            btn.closest('.list-item-editor').remove();
+        }
+
+        // Actualizar preview del video
+        function updateVideoPreview() {
+            const url = document.getElementById('videoUrl').value;
+            const preview = document.getElementById('videoPreview');
+            const container = document.getElementById('videoPreviewContainer');
+            
+            if (url) {
+                preview.style.display = 'block';
+                container.innerHTML = `
+                    <iframe src="${url}?rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                `;
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+
+        // Guardar cambios
+        async function saveStyle() {
+            if (!currentStyleId) {
+                showAlert('Selecciona un estilo primero', 'error');
+                return;
+            }
+            
+            try {
+                // Obtener datos del formulario PRESERVANDO LOS IDs ORIGINALES
+                const estiloActual = yogaStyles[currentStyleId];
+                const galleryImages = [...(estiloActual.galleryImages || [])];
+                
+                const data = {
+                    title: document.getElementById('styleTitle').value.trim(),
+                    icon: document.getElementById('styleIcon').value.trim(),
+                    description: document.getElementById('styleDescription').value.trim(),
+                    videoUrl: document.getElementById('videoUrl').value.trim(),
+                    homeIntro: document.getElementById('homeIntro').value.trim(),
+                    // PRESERVAR LOS IDs ORIGINALES, no URLs
+                    galleryImages: galleryImages,
+                    // Obtener posturas
+                    poses: Array.from(document.querySelectorAll('#posesEditor input'))
+                        .map(input => input.value.trim())
+                        .filter(text => text),
+                    // Obtener pasos
+                    homeSteps: Array.from(document.querySelectorAll('#stepsEditor input'))
+                        .map(input => input.value.trim())
+                        .filter(text => text),
+                    // Obtener consejos
+                    tips: Array.from(document.querySelectorAll('#tipsEditor input'))
+                        .map(input => input.value.trim())
+                        .filter(text => text)
+                };
+                
+                // Validar campos obligatorios
+                if (!data.title || !data.icon || !data.description || !data.videoUrl || !data.homeIntro) {
+                    showAlert('Completa todos los campos obligatorios', 'error');
+                    return;
+                }
+                
+                // Guardar en Firestore
+                await db.collection('yoga_styles').doc(currentStyleId).set(data);
+                
+                // Actualizar datos locales
+                yogaStyles[currentStyleId] = data;
+                
+                // Actualizar sidebar
+                renderSidebar();
+                
+                showAlert('¡Cambios guardados exitosamente!', 'success');
+                
+                // Recargar página de yoga
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
+            } catch (error) {
+                console.error('Error al guardar:', error);
+                showAlert('Error al guardar los cambios: ' + error.message, 'error');
+            }
+        }
+
+        // Vista previa
+        function previewStyle() {
+            if (!currentStyleId) {
+                showAlert('Selecciona un estilo primero', 'error');
+                return;
+            }
+            
+            const estilo = yogaStyles[currentStyleId];
+            const galleryImages = estilo.galleryImages || [];
+            
+            const data = {
+                title: document.getElementById('styleTitle').value.trim(),
+                icon: document.getElementById('styleIcon').value.trim(),
+                description: document.getElementById('styleDescription').value.trim(),
+                videoUrl: document.getElementById('videoUrl').value.trim(),
+                homeIntro: document.getElementById('homeIntro').value.trim(),
+                galleryImages: galleryImages,
+                poses: Array.from(document.querySelectorAll('#posesEditor input'))
+                    .map(input => input.value.trim())
+                    .filter(text => text),
+                homeSteps: Array.from(document.querySelectorAll('#stepsEditor input'))
+                    .map(input => input.value.trim())
+                    .filter(text => text),
+                tips: Array.from(document.querySelectorAll('#tipsEditor input'))
+                    .map(input => input.value.trim())
+                    .filter(text => text)
+            };
+            
+            // Validar
+            if (!data.title || !data.icon || !data.description || !data.videoUrl || !data.homeIntro) {
+                showAlert('Completa todos los campos obligatorios', 'error');
+                return;
+            }
+            
+            // Llenar modal de preview
+            document.getElementById('previewTitle').textContent = data.title;
+            document.getElementById('previewTitleCard').textContent = data.title;
+            document.getElementById('previewIcon').className = data.icon;
+            document.getElementById('previewDescription').textContent = data.description;
+            document.getElementById('previewHomeIntro').textContent = data.homeIntro;
+            
+            // Video
+            document.getElementById('previewVideoContainer').innerHTML = `
+                <iframe src="${data.videoUrl}?rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            `;
+            
+            // Cargar imágenes desde Firestore para preview
+            const gallery = document.getElementById('previewGallery');
+            gallery.innerHTML = '';
+            
+            data.galleryImages.forEach(async (imageId) => {
+                try {
+                    const imageDoc = await db.collection('images').doc(imageId).get();
+                    if (imageDoc.exists) {
+                        const imgData = imageDoc.data();
+                        gallery.innerHTML += `<img src="data:${imgData.mimeType};base64,${imgData.imageData}" alt="Postura" style="max-width: 150px; margin: 5px; border-radius: 8px;">`;
+                    }
+                } catch (error) {
+                    console.error("Error al cargar imagen para preview:", error);
+                }
+            });
+            
+            // Posturas
+            const poses = document.getElementById('previewPoses');
+            poses.innerHTML = '<ul>';
+            data.poses.forEach(pose => {
+                if (pose) {
+                    poses.innerHTML += `<li><i class="fas fa-yoga"></i> ${pose}</li>`;
+                }
+            });
+            poses.innerHTML += '</ul>';
+            
+            // Pasos
+            const steps = document.getElementById('previewSteps');
+            steps.innerHTML = '<ol>';
+            data.homeSteps.forEach(step => {
+                if (step) {
+                    steps.innerHTML += `<li><i class="fas fa-chevron-right"></i> ${step}</li>`;
+                }
+            });
+            steps.innerHTML += '</ol>';
+            
+            // Consejos
+            const tips = document.getElementById('previewTips');
+            tips.innerHTML = '';
+            data.tips.forEach(tip => {
+                if (tip) {
+                    tips.innerHTML += `<li>${tip}</li>`;
+                }
+            });
+            
+            // Mostrar modal
+            document.getElementById('previewModal').classList.add('active');
+        }
+
+        // Mostrar modal de agregar estilo
+        function showAddStyleModal() {
+            document.getElementById('newStyleId').value = '';
+            document.getElementById('newStyleTitle').value = '';
+            document.getElementById('addStyleModal').classList.add('active');
+        }
+
+        // Mostrar confirmación de eliminación desde el botón principal
+        function showDeleteConfirmation() {
+            if (!currentStyleId) {
+                showAlert('Selecciona un estilo primero', 'error');
+                return;
+            }
+            const style = yogaStyles[currentStyleId];
+            const styleName = style.title || currentStyleId;
+            document.getElementById('deleteStyleName').textContent = styleName;
+            document.getElementById('deleteConfirmationInput').value = '';
+            document.getElementById('deleteConfirmModal').classList.add('active');
+        }
+
+        // Confirmar eliminación desde sidebar
+        function confirmDeleteStyle(styleId, styleName) {
+            currentStyleId = styleId;
+            document.getElementById('deleteStyleName').textContent = styleName;
+            document.getElementById('deleteConfirmationInput').value = '';
+            document.getElementById('deleteConfirmModal').classList.add('active');
+        }
+
+        // Eliminar estilo
+        async function deleteStyle() {
+            const confirmation = document.getElementById('deleteConfirmationInput').value.trim();
+            
+            if (confirmation !== 'ELIMINAR') {
+                showAlert('Escribe "ELIMINAR" exactamente para confirmar', 'error');
+                return;
+            }
+            
+            if (!currentStyleId) {
+                showAlert('Error: No hay estilo seleccionado', 'error');
+                return;
+            }
+            
+            try {
+                // Eliminar del Firestore
+                await db.collection('yoga_styles').doc(currentStyleId).delete();
+                
+                // Eliminar de datos locales
+                delete yogaStyles[currentStyleId];
+                
+                // Limpiar formulario
+                document.getElementById('editForm').style.display = 'none';
+                document.getElementById('emptyState').style.display = 'block';
+                document.getElementById('deleteStyleBtn').style.display = 'none';
+                currentStyleId = null;
+                
+                // Cerrar modal
+                closeModal('deleteConfirmModal');
+                
+                // Actualizar sidebar
+                renderSidebar();
+                
+                // Mostrar alerta
+                showAlert(`¡Estilo eliminado exitosamente!`, 'success');
+                
+                // Recargar después de 2 segundos
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } catch (error) {
+                console.error('Error al eliminar estilo:', error);
+                showAlert('Error al eliminar el estilo: ' + error.message, 'error');
+            }
+        }
+
+        // Cerrar modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Crear nuevo estilo
+        async function createNewStyle() {
+            const styleId = document.getElementById('newStyleId').value.trim().toLowerCase();
+            const styleTitle = document.getElementById('newStyleTitle').value.trim();
+            
+            if (!styleId || !styleTitle) {
+                showAlert('Completa todos los campos', 'error');
+                return;
+            }
+            
+            if (yogaStyles[styleId]) {
+                showAlert('Ya existe un estilo con este ID', 'error');
+                return;
+            }
+            
+            try {
+                const defaultData = {
+                    title: styleTitle,
+                    icon: 'fas fa-sun',
+                    description: 'Descripción del estilo de yoga...',
+                    videoUrl: '',
+                    galleryImages: [],
+                    poses: [],
+                    homeIntro: 'Instrucciones para practicar en casa...',
+                    homeSteps: [],
+                    tips: []
+                };
+                await db.collection('yoga_styles').doc(styleId).set(defaultData);
+                yogaStyles[styleId] = defaultData;
+                showAlert('¡Estilo creado exitosamente!', 'success');
+                closeModal('addStyleModal');
+                renderSidebar();
+                selectStyle(styleId);
+            } catch (error) {
+                console.error('Error al crear estilo:', error);
+                showAlert('Error al crear el estilo: ' + error.message, 'error');
+            }
+        }
+
+        // Mostrar alerta MEJORADA con diseño bonito
+        function showAlert(message, type = 'success') {
+            const container = document.getElementById('alertContainer');
+            
+            // Crear alerta
+            const alert = document.createElement('div');
+            alert.className = `alert-custom ${type} slide-in`;
+            
+            // Iconos según el tipo
+            const icons = {
+                success: '<i class="fas fa-check-circle"></i>',
+                error: '<i class="fas fa-exclamation-circle"></i>',
+                warning: '<i class="fas fa-exclamation-triangle"></i>',
+                info: '<i class="fas fa-info-circle"></i>'
+            };
+            
+            alert.innerHTML = `
+                <div class="alert-icon">${icons[type] || icons.info}</div>
+                <div class="alert-content">
+                    <div class="alert-title">${type === 'success' ? 'Éxito' : type === 'error' ? 'Error' : type === 'warning' ? 'Advertencia' : 'Información'}</div>
+                    <div class="alert-message">${message}</div>
+                </div>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            // Añadir al contenedor
+            container.appendChild(alert);
+            
+            // Remover después de 5 segundos
+            setTimeout(() => {
+                alert.classList.add('slide-out');
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alert.parentNode.removeChild(alert);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Cerrar modales con clic fuera
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Cerrar modales con Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+            }
+        });
+
+        // Validar input de confirmación en tiempo real
+        document.getElementById('deleteConfirmationInput').addEventListener('input', function() {
+            const value = this.value.trim();
+            const btn = document.getElementById('confirmDeleteBtn');
+            if (value === 'ELIMINAR') {
+                btn.disabled = false;
+                this.classList.add('valid');
+            } else {
+                btn.disabled = true;
+                this.classList.remove('valid');
+            }
+        });
+    </script>
+</body>
+</html>

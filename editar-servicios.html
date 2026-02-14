@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editar Servicios - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="editar-servicios.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-edit"></i> Editar Servicios</h1>
+      <p>Administra y personaliza los servicios de ZenzAndRelax</p>
+    </header>
+
+    <div class="success-message" id="successMessage">
+      <i class="fas fa-check-circle"></i> Servicio guardado exitosamente
+    </div>
+
+    <div class="error-message" id="errorMessage"></div>
+
+    <!-- Formulario de servicio -->
+    <div class="service-form" id="serviceForm">
+      <h2 id="formTitle">Agregar Nuevo Servicio</h2>
+      <input type="hidden" id="serviceId">
+      
+      <div class="form-group">
+        <label for="serviceTitle">Título del Servicio *</label>
+        <input type="text" id="serviceTitle" required>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceDescription">Descripción Corta *</label>
+        <textarea id="serviceDescription" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceDetails">Detalles (Información completa) *</label>
+        <textarea id="serviceDetails" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceIcon">Icono (Clase de Font Awesome) *</label>
+        <input type="text" id="serviceIcon" placeholder="fas fa-spa" required>
+        <small>
+          Ejemplos: fas fa-spa, fas fa-hand-holding-heart, fas fa-sun, fas fa-moon
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceOrder">Orden de visualización *</label>
+        <input type="number" id="serviceOrder" min="1" required>
+      </div>
+
+      <div class="form-actions">
+        <button class="cancel-btn" id="cancelBtn">Cancelar</button>
+        <button class="save-btn" id="saveBtn">Guardar Servicio</button>
+      </div>
+    </div>
+
+    <!-- Botón para agregar nuevo servicio -->
+    <button class="add-service-btn" id="addServiceBtn">
+      <i class="fas fa-plus"></i> Agregar Nuevo Servicio
+    </button>
+
+    <!-- Lista de servicios -->
+    <div id="servicesContainer">
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Cargando servicios...
+      </div>
+    </div>
+
+    <a href="servicios.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Volver a Servicios
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Variables globales
+    let currentUser = null;
+    let editingServiceId = null;
+
+    // Verificar autenticación
+    auth.onAuthStateChanged((user) => {
+      currentUser = user;
+      if (!user) {
+        window.location.href = 'login.html';
+      } else {
+        // Cargar servicios después de verificar autenticación
+        loadServices();
+      }
+    });
+
+    // Cargar servicios desde Firebase
+    async function loadServices() {
+      try {
+        const servicesContainer = document.getElementById('servicesContainer');
+        
+        // Obtener servicios ordenados por campo 'order'
+        const servicesSnapshot = await db.collection('services')
+          .orderBy('order', 'asc')
+          .get();
+
+        if (servicesSnapshot.empty) {
+          servicesContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.6);">
+              <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+              <p>No hay servicios creados aún. Haz clic en "Agregar Nuevo Servicio" para comenzar.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let servicesHTML = `<div class="services-list">`;
+
+        servicesSnapshot.forEach((doc) => {
+          const service = doc.data();
+          servicesHTML += `
+            <div class="service-item" data-id="${doc.id}">
+              <div class="service-header">
+                <div class="service-title">
+                  <i class="service-icon-display ${service.icon || 'fas fa-spa'}"></i>
+                  <span>${service.title || 'Sin título'}</span>
+                </div>
+                <div class="service-actions">
+                  <button class="btn edit-btn" onclick="editService('${doc.id}')">
+                    <i class="fas fa-edit"></i> Editar
+                  </button>
+                  <button class="btn delete-btn" onclick="deleteService('${doc.id}')">
+                    <i class="fas fa-trash"></i> Eliminar
+                  </button>
+                </div>
+              </div>
+              <p class="service-description">${service.description || 'Sin descripción'}</p>
+              <p class="service-order">Orden: ${service.order || 0}</p>
+            </div>
+          `;
+        });
+
+        servicesHTML += `</div>`;
+        servicesContainer.innerHTML = servicesHTML;
+
+      } catch (error) {
+        console.error('Error al cargar servicios:', error);
+        document.getElementById('servicesContainer').innerHTML = `
+          <div style="text-align: center; padding: 40px; color: #FF5252;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem;"></i>
+            <p>Error al cargar los servicios. Por favor, intenta nuevamente.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Mostrar formulario para agregar/editar servicio
+    function showServiceForm(serviceId = null) {
+      const form = document.getElementById('serviceForm');
+      const formTitle = document.getElementById('formTitle');
+      const addServiceBtn = document.getElementById('addServiceBtn');
+      
+      form.classList.add('form-visible');
+      addServiceBtn.style.display = 'none';
+      
+      // Limpiar formulario
+      document.getElementById('serviceId').value = '';
+      document.getElementById('serviceTitle').value = '';
+      document.getElementById('serviceDescription').value = '';
+      document.getElementById('serviceDetails').value = '';
+      document.getElementById('serviceIcon').value = 'fas fa-spa';
+      document.getElementById('serviceOrder').value = getNextOrder();
+      
+      if (serviceId) {
+        // Editar servicio existente
+        editingServiceId = serviceId;
+        formTitle.textContent = 'Editar Servicio';
+        
+        // Cargar datos del servicio
+        db.collection('services').doc(serviceId).get().then((doc) => {
+          if (doc.exists) {
+            const service = doc.data();
+            document.getElementById('serviceId').value = serviceId;
+            document.getElementById('serviceTitle').value = service.title || '';
+            document.getElementById('serviceDescription').value = service.description || '';
+            document.getElementById('serviceDetails').value = service.details || '';
+            document.getElementById('serviceIcon').value = service.icon || 'fas fa-spa';
+            document.getElementById('serviceOrder').value = service.order || 1;
+          }
+        });
+      } else {
+        // Agregar nuevo servicio
+        editingServiceId = null;
+        formTitle.textContent = 'Agregar Nuevo Servicio';
+      }
+    }
+
+    // Ocultar formulario
+    function hideServiceForm() {
+      const form = document.getElementById('serviceForm');
+      const addServiceBtn = document.getElementById('addServiceBtn');
+      
+      form.classList.remove('form-visible');
+      addServiceBtn.style.display = 'inline-block';
+      
+      // Limpiar campos
+      document.getElementById('serviceForm').reset();
+      editingServiceId = null;
+    }
+
+    // Obtener próximo número de orden
+    function getNextOrder() {
+      const serviceItems = document.querySelectorAll('.service-item');
+      return serviceItems.length + 1;
+    }
+
+    // Guardar servicio
+    async function saveService() {
+      const title = document.getElementById('serviceTitle').value.trim();
+      const description = document.getElementById('serviceDescription').value.trim();
+      const details = document.getElementById('serviceDetails').value.trim();
+      const icon = document.getElementById('serviceIcon').value.trim();
+      const order = parseInt(document.getElementById('serviceOrder').value);
+      const serviceId = document.getElementById('serviceId').value;
+
+      // Validaciones
+      if (!title || !description || !details || !icon || isNaN(order)) {
+        showError('Por favor, completa todos los campos obligatorios');
+        return;
+      }
+
+      try {
+        const serviceData = {
+          title,
+          description,
+          details,
+          icon,
+          order,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        if (editingServiceId) {
+          // Actualizar servicio existente
+          await db.collection('services').doc(editingServiceId).update(serviceData);
+          showSuccess('Servicio actualizado exitosamente');
+        } else {
+          // Crear nuevo servicio
+          serviceData.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+          await db.collection('services').add(serviceData);
+          showSuccess('Servicio creado exitosamente');
+        }
+
+        // Recargar lista y ocultar formulario
+        await loadServices();
+        hideServiceForm();
+
+      } catch (error) {
+        console.error('Error al guardar servicio:', error);
+        showError('Error al guardar el servicio. Por favor, intenta nuevamente.');
+      }
+    }
+
+    // Eliminar servicio
+    async function deleteService(serviceId) {
+      if (!confirm('¿Estás seguro de que deseas eliminar este servicio? Esta acción no se puede deshacer.')) {
+        return;
+      }
+
+      try {
+        await db.collection('services').doc(serviceId).delete();
+        showSuccess('Servicio eliminado exitosamente');
+        await loadServices();
+      } catch (error) {
+        console.error('Error al eliminar servicio:', error);
+        showError('Error al eliminar el servicio. Por favor, intenta nuevamente.');
+      }
+    }
+
+    // Funciones de utilidad para mensajes
+    function showSuccess(message) {
+      const successMsg = document.getElementById('successMessage');
+      successMsg.textContent = message;
+      successMsg.style.display = 'block';
+      
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 3000);
+    }
+
+    function showError(message) {
+      const errorMsg = document.getElementById('errorMessage');
+      errorMsg.textContent = message;
+      errorMsg.style.display = 'block';
+      
+      setTimeout(() => {
+        errorMsg.style.display = 'none';
+      }, 5000);
+    }
+
+    // Event Listeners
+    document.getElementById('addServiceBtn').addEventListener('click', () => {
+      showServiceForm();
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', () => {
+      hideServiceForm();
+    });
+
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      saveService();
+    });
+
+    // Exponer funciones globales para los botones inline
+    window.editService = showServiceForm;
+    window.deleteService = deleteService;
+  </script>
+</body>
+</html>

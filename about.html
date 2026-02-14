@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sobre Nosotros - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .about-content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .about-content h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.8rem;
+      color: #fff;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    }
+
+    .about-content p {
+      margin-bottom: 20px;
+    }
+
+    .mission-vision {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .mission-vision {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mission, .vision {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      border-left: 4px solid #9370DB;
+    }
+
+    .mission h3, .vision h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mission h3 {
+      color: #4CAF50;
+    }
+
+    .vision h3 {
+      color: #2196F3;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .value-card {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .value-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #9370DB;
+    }
+
+    .value-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .team-section {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .team-member {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: white;
+    }
+
+    .team-member h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .team-member p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-info-circle"></i> Sobre Nosotros</h1>
+      <p>Conoce nuestra historia y compromiso con tu bienestar</p>
+    </header>
+
+    <div class="about-content">
+      <h2><i class="fas fa-leaf"></i> Nuestra Historia</h2>
+      <p>
+        <strong>ZenzAndRelax</strong> nació en 2020 con una visión clara: crear un espacio sagrado donde las personas pudieran encontrar equilibrio, paz y bienestar integral en medio del ritmo acelerado de la vida moderna.
+      </p>
+      <p>
+        Fundado por un grupo de terapeutas y expertos en bienestar, nuestro centro ha crecido hasta convertirse en un referente en tratamientos holísticos y terapias alternativas. Comenzamos con solo dos salas de tratamiento y hoy ofrecemos una amplia gama de servicios en instalaciones diseñadas para la máxima relajación.
+      </p>
+      <p>
+        Cada detalle de ZenzAndRelax ha sido cuidadosamente pensado para brindarte una experiencia transformadora. Desde la selección de nuestros productos naturales hasta la formación continua de nuestro equipo, todo está orientado a tu bienestar.
+      </p>
+
+      <div class="mission-vision">
+        <div class="mission">
+          <h3><i class="fas fa-bullseye"></i> Nuestra Misión</h3>
+          <p>Proporcionar experiencias de bienestar integral que transformen vidas, promoviendo la salud física, mental y espiritual a través de terapias holísticas personalizadas y un ambiente de serenidad absoluta.</p>
+        </div>
+
+        <div class="vision">
+          <h3><i class="fas fa-eye"></i> Nuestra Visión</h3>
+          <p>Ser el centro de bienestar más reconocido y confiable en nuestra región, expandiendo nuestro alcance para ayudar a más personas a encontrar su equilibrio interior y vivir vidas más plenas y saludables.</p>
+        </div>
+      </div>
+
+      <h2 style="margin-top: 50px;"><i class="fas fa-star"></i> Nuestros Valores</h2>
+      <p>En ZenzAndRelax, nuestros valores guían cada decisión y acción:</p>
+
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3>Compasión</h3>
+          <p>Atendemos a cada persona con empatía y calidez genuina.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <h3>Naturalidad</h3>
+          <p>Utilizamos productos 100% naturales y métodos respetuosos con el medio ambiente.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <h3>Excelencia</h3>
+          <p>Nuestros terapeutas están altamente capacitados y actualizados constantemente.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3>Integridad</h3>
+          <p>Actuamos con honestidad y transparencia en todas nuestras relaciones.</p>
+        </div>
+      </div>
+
+      <div class="team-section">
+        <h2 style="margin-top: 50px;"><i class="fas fa-users"></i> Nuestro Equipo</h2>
+        <p style="margin-bottom: 20px;">Conoce a algunos de los profesionales que hacen posible tu bienestar:</p>
+
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="team-avatar">
+              <i class="fas fa-user-md"></i>
+            </div>
+            <h3>María Rodríguez</h3>
+            <p>Directora & Terapeuta Principal</p>
+          </div>
+
+          <div class="team-member">
+            <div class="team-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <h3>Carlos Méndez</h3>
+            <p>Experto en Reiki & Meditación</p>
+          </div>
+
+          <div class="team-member">
+            <div class="team-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <h3>Ana Silva</h3>
+            <p>Maestra de Yoga & Instructora</p>
+          </div>
+
+          <div class="team-member">
+            <div class="team-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <h3>Luisa Gómez</h3>
+            <p>Especialista en Aromaterapia</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn" style="margin-top: 30px;">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>

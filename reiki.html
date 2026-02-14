@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reiki - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .reiki-hero {
+      background: linear-gradient(135deg, rgba(75, 0, 130, 0.8), rgba(106, 13, 173, 0.85)), url('https://images.unsplash.com/photo-1588819398168-5c3d61de4b84?w=1200&h=400&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .reiki-hero h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .reiki-hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .chakras-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin-bottom: 40px;
+    }
+
+    .chakras-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .chakra-card {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .chakra-card:hover {
+      transform: translateY(-5px);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .chakra-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #9370DB;
+    }
+
+    .chakra-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .chakra-card p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .levels-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .levels-section {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .level-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .level-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .level-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    }
+
+    .level-icon {
+      font-size: 2.5rem;
+      color: #9370DB;
+    }
+
+    .level-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .level-card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .level-benefits {
+      margin-top: 15px;
+    }
+
+    .level-benefits h3 {
+      font-size: 1.1rem;
+      color: #9370DB;
+      margin-bottom: 10px;
+    }
+
+    .level-benefits ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .level-benefits li {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .level-benefits li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .healing-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-spa"></i> Reiki - Sanación Energética</h1>
+      <p>Equilibra tu energía vital y encuentra armonía interior</p>
+    </header>
+
+    <div class="reiki-hero">
+      <h2>El Arte de la Sanación Universal</h2>
+      <p>Reiki es una técnica japonesa de imposición de manos que canaliza la energía universal para promover la sanación física, emocional, mental y espiritual. Es una práctica suave pero poderosa que restaura el flujo natural de energía en el cuerpo.</p>
+    </div>
+
+    <div class="chakras-section">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 20px; text-align: center;">
+        <i class="fas fa-circle"></i> Los Siete Chakras Principales
+      </h2>
+      <p style="color: rgba(255, 255, 255, 0.9); text-align: center; margin-bottom: 25px;">
+        Centros energéticos que Reiki ayuda a equilibrar y armonizar
+      </p>
+
+      <div class="chakras-grid">
+        <div class="chakra-card">
+          <div class="chakra-icon">
+            <i class="fas fa-circle" style="color: #FF0000;"></i>
+          </div>
+          <h3>Raíz (Muladhara)</h3>
+          <p>Seguridad, supervivencia y conexión con la tierra</p>
+        </div>
+
+        <div class="chakra-card">
+          <div class="chakra-icon">
+            <i class="fas fa-circle" style="color: #FF7F00;"></i>
+          </div>
+          <h3>Sacral (Svadhisthana)</h3>
+          <p>Creatividad, placer y emociones</p>
+        </div>
+
+        <div class="chakra-card">
+          <div class="chakra-icon">
+            <i class="fas fa-circle" style="color: #FFFF00;"></i>
+          </div>
+          <h3>Solar (Manipura)</h3>
+          <p>Poder personal, autoestima y voluntad</p>
+        </div>
+
+        <div class="chakra-card">
+          <div class="chakra-icon">
+            <i class="fas fa-circle" style="color: #00FF00;"></i>
+          </div>
+          <h3>Corazón (Anahata)</h3>
+          <p>Amor, compasión y conexión</p>
+        </div>
+
+        <div class="chakra-card">
+          <div class="chakra-icon">
+            <i class="fas fa-circle" style="color: #00FFFF;"></i>
+          </div>
+          <h3>Garganta (Vishuddha)</h3>
+          <p>Comunicación y expresión</p>
+        </div>
+
+        <div class="chakra-card">
+          <div class="chakra-icon">
+            <i class="fas fa-circle" style="color: #4B0082;"></i>
+          </div>
+          <h3>Tercer Ojo (Ajna)</h3>
+          <p>Intuición e insight</p>
+        </div>
+
+        <div class="chakra-card">
+          <div class="chakra-icon">
+            <i class="fas fa-circle" style="color: #9400D3;"></i>
+          </div>
+          <h3>Corona (Sahasrara)</h3>
+          <p>Conexión espiritual y conciencia</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="levels-section">
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <h2>Nivel I - Auto-sanación</h2>
+        </div>
+        <p>Introducción a los principios fundamentales de Reiki. Aprendes a canalizar energía para tu propia sanación y bienestar diario.</p>
+        <div class="level-benefits">
+          <h3>Qué Aprenderás:</h3>
+          <ul>
+            <li>Técnicas de auto-tratamiento</li>
+            <li>Posiciones de manos básicas</li>
+            <li>Historia y filosofía de Reiki</li>
+            <li>Primeros símbolos energéticos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-icon">
+            <i class="fas fa-hands"></i>
+          </div>
+          <h2>Nivel II - Sanación a Otros</h2>
+        </div>
+        <p>Profundización en la práctica con símbolos avanzados que permiten sanar a distancia y trabajar con aspectos emocionales y mentales.</p>
+        <div class="level-benefits">
+          <h3>Qué Aprenderás:</h3>
+          <ul>
+            <li>Símbolos de poder y distancia</li>
+            <li>Sanación a distancia</li>
+            <li>Liberación emocional</li>
+            <li>Trabajo con patrones mentales</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <h2>Nivel III - Maestría</h2>
+        </div>
+        <p>El nivel más avanzado donde te conviertes en Maestro/Profesor de Reiki, capaz de iniciar a otros y enseñar esta maravillosa técnica.</p>
+        <div class="level-benefits">
+          <h3>Qué Aprenderás:</h3>
+          <ul>
+            <li>Símbolo maestro</li>
+            <li>Técnicas de iniciación</li>
+            <li>Enseñanza y mentoría</li>
+            <li>Sanación grupal avanzada</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="healing-section">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 20px;">
+        <i class="fas fa-heart"></i> Beneficios de las Sesiones de Reiki
+      </h2>
+      <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: rgba(255, 255, 255, 0.9); line-height: 1.8;">
+        Las sesiones de Reiki promueven un profundo estado de relajación que activa los mecanismos naturales de curación del cuerpo. Muchos clientes reportan reducción del estrés, alivio del dolor, mayor claridad mental y una sensación general de paz y bienestar después de sus sesiones.
+      </p>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn" style="margin-top: 30px;">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>

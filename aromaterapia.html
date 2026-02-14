@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aromaterapia - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .aroma-hero {
+      background: linear-gradient(135deg, rgba(75, 0, 130, 0.8), rgba(106, 13, 173, 0.85)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1200&h=400&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .aroma-hero h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .aroma-hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .essential-oils {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .essential-oils {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .oil-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+    }
+
+    .oil-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .oil-icon {
+      font-size: 3rem;
+      color: #9370DB;
+      margin-bottom: 15px;
+    }
+
+    .oil-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .oil-card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .oil-properties {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .oil-properties h3 {
+      font-size: 1rem;
+      color: #9370DB;
+      margin-bottom: 10px;
+    }
+
+    .oil-properties ul {
+      list-style: none;
+      padding-left: 0;
+      text-align: left;
+    }
+
+    .oil-properties li {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 5px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .oil-properties li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+    }
+
+    .treatments-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin-top: 20px;
+    }
+
+    .treatments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .treatment-card {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+    }
+
+    .treatment-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .treatment-card p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-seedling"></i> Aromaterapia</h1>
+      <p>Tratamientos con aceites esenciales para tu bienestar integral</p>
+    </header>
+
+    <div class="aroma-hero">
+      <h2>El Poder de las Esencias</h2>
+      <p>La aromaterapia utiliza aceites esenciales extraídos de plantas para promover la salud física, emocional y espiritual. Cada esencia tiene propiedades únicas que pueden transformar tu estado de ánimo, aliviar dolencias y equilibrar tu energía.</p>
+    </div>
+
+    <div class="essential-oils">
+      <div class="oil-card">
+        <div class="oil-icon">
+          <i class="fas fa-tint"></i>
+        </div>
+        <h2>Lavanda</h2>
+        <p>La reina de la relajación y el sueño reparador</p>
+        <div class="oil-properties">
+          <h3>Propiedades:</h3>
+          <ul>
+            <li>Calma el sistema nervioso</li>
+            <li>Promueve el sueño profundo</li>
+            <li>Alivia dolores de cabeza</li>
+            <li>Reduce la ansiedad</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="oil-card">
+        <div class="oil-icon">
+          <i class="fas fa-leaf"></i>
+        </div>
+        <h2>Eucalipto</h2>
+        <p>Purifica y despeja las vías respiratorias</p>
+        <div class="oil-properties">
+          <h3>Propiedades:</h3>
+          <ul>
+            <li>Descongestiona los senos</li>
+            <li>Mejora la respiración</li>
+            <li>Estimula la claridad mental</li>
+            <li>Propiedades antibacterianas</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="oil-card">
+        <div class="oil-icon">
+          <i class="fas fa-sun"></i>
+        </div>
+        <h2>Naranja Dulce</h2>
+        <p>Eleva el ánimo y combate la tristeza</p>
+        <div class="oil-properties">
+          <h3>Propiedades:</h3>
+          <ul>
+            <li>Aumenta la alegría</li>
+            <li>Reduce el estrés</li>
+            <li>Estimula la creatividad</li>
+            <li>Mejora la digestión</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="oil-card">
+        <div class="oil-icon">
+          <i class="fas fa-moon"></i>
+        </div>
+        <h2>Manzanilla</h2>
+        <p>Suaviza y calma tanto cuerpo como mente</p>
+        <div class="oil-properties">
+          <h3>Propiedades:</h3>
+          <ul>
+            <li>Antiinflamatorio natural</li>
+            <li>Alivia la irritación de piel</li>
+            <li>Promueve la paz interior</li>
+            <li>Calma los espasmos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="oil-card">
+        <div class="oil-icon">
+          <i class="fas fa-fire"></i>
+        </div>
+        <h2>Menta</h2>
+        <p>Refresca y revitaliza cuerpo y mente</p>
+        <div class="oil-properties">
+          <h3>Propiedades:</h3>
+          <ul>
+            <li>Aumenta la energía</li>
+            <li>Mejora la concentración</li>
+            <li>Alivia náuseas</li>
+            <li>Despeja la mente</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="oil-card">
+        <div class="oil-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h2>Rosa</h2>
+        <p>Abre el corazón y equilibra las emociones</p>
+        <div class="oil-properties">
+          <h3>Propiedades:</h3>
+          <ul>
+            <li>Equilibra hormonas</li>
+            <li>Alivia la tristeza</li>
+            <li>Promueve el amor propio</li>
+            <li>Hidrata la piel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="treatments-section">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 20px;">
+        <i class="fas fa-spa"></i> Tratamientos Disponibles
+      </h2>
+      <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 25px;">
+        Descubre nuestros tratamientos especializados que combinan aromaterapia con otras técnicas de bienestar
+      </p>
+
+      <div class="treatments-grid">
+        <div class="treatment-card">
+          <h3><i class="fas fa-shower"></i> Baño Aromático</h3>
+          <p>Experiencia de inmersión en aceites esenciales seleccionados para tu necesidad específica. Ideal para relajación profunda o revitalización.</p>
+        </div>
+
+        <div class="treatment-card">
+          <h3><i class="fas fa-cloud"></i> Difusión Ambiental</h3>
+          <p>Sesión en cabina privada con difusores de alta calidad que crean una atmósfera terapéutica personalizada según tus objetivos de bienestar.</p>
+        </div>
+
+        <div class="treatment-card">
+          <h3><i class="fas fa-hand-holding-heart"></i> Masaje Aromático</h3>
+          <p>Combinación de técnicas de masaje con aceites esenciales terapéuticos para una experiencia sensorial completa que nutre cuerpo y alma.</p>
+        </div>
+
+        <div class="treatment-card">
+          <h3><i class="fas fa-spray-can"></i> Rociado Facial</h3>
+          <p>Tratamiento facial con hidrolatos y aceites esenciales para hidratar, tonificar y rejuvenecer la piel mientras inhalas sus beneficios terapéuticos.</p>
+        </div>
+
+        <div class="treatment-card">
+          <h3><i class="fas fa-mug-hot"></i> Inhalación Directa</h3>
+          <p>Técnica concentrada para aliviar congestión respiratoria, mejorar la claridad mental o equilibrar emociones a través de la inhalación controlada.</p>
+        </div>
+
+        <div class="treatment-card">
+          <h3><i class="fas fa-shopping-bag"></i> Kit Personalizado</h3>
+          <p>Creación de tu propia mezcla de aceites esenciales para llevar a casa, con instrucciones personalizadas para uso diario y bienestar continuo.</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn" style="margin-top: 30px;">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>

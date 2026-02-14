@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .edit-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #FF6B6B, #EE5A24);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-weight: 600;
+    }
+
+    .edit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      cursor: pointer;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #9370DB;
+    }
+
+    .service-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .service-card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    /* Modal de detalles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+      animation: slideUp 0.4s;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.5rem;
+      color: #9370DB;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .close-modal:hover {
+      transform: rotate(90deg);
+      color: #FF6B6B;
+    }
+
+    .modal h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #fff;
+      text-align: center;
+    }
+
+    .modal-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: #9370DB;
+      display: block;
+      text-align: center;
+    }
+
+    .modal p {
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px;
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .error {
+      text-align: center;
+      padding: 50px;
+      color: #FF6B6B;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 10px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-spa"></i> Nuestros Servicios</h1>
+      <p>Descubre experiencias que transformarán tu bienestar</p>
+      <button class="edit-btn" id="editBtn">
+        <i class="fas fa-edit"></i> Editar Servicios
+      </button>
+    </header>
+
+    <div id="servicesContainer">
+      <div class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Cargando servicios...
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <!-- Modal de detalles -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <button class="close-modal" id="closeModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <i class="modal-icon" id="modalIcon"></i>
+      <h2 id="modalTitle"></h2>
+      <p id="modalDetails"></p>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    // Configuración de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Variables globales
+    let currentUser = null;
+
+    // Verificar autenticación
+    auth.onAuthStateChanged((user) => {
+      currentUser = user;
+      if (!user) {
+        window.location.href = 'login.html';
+      } else {
+        // Cargar servicios después de verificar autenticación
+        loadServices();
+      }
+    });
+
+    // Cargar servicios desde Firebase
+    async function loadServices() {
+      try {
+        const servicesContainer = document.getElementById('servicesContainer');
+        
+        // Obtener servicios ordenados por campo 'order'
+        const servicesSnapshot = await db.collection('services')
+          .orderBy('order', 'asc')
+          .get();
+
+        if (servicesSnapshot.empty) {
+          servicesContainer.innerHTML = `
+            <div class="error">
+              <i class="fas fa-exclamation-triangle"></i>
+              <p>No hay servicios disponibles. Por favor, agrega servicios desde la página de edición.</p>
+            </div>
+          `;
+          return;
+        }
+
+        let servicesHTML = `
+          <div class="services-grid">
+        `;
+
+        servicesSnapshot.forEach((doc) => {
+          const service = doc.data();
+          servicesHTML += `
+            <div class="service-card" data-id="${doc.id}">
+              <div class="service-icon">
+                <i class="${service.icon || 'fas fa-spa'}"></i>
+              </div>
+              <h2>${service.title || 'Sin título'}</h2>
+              <p>${service.description || 'Sin descripción'}</p>
+            </div>
+          `;
+        });
+
+        servicesHTML += `</div>`;
+        servicesContainer.innerHTML = servicesHTML;
+
+        // Agregar eventos de clic a las tarjetas
+        document.querySelectorAll('.service-card').forEach(card => {
+          card.addEventListener('click', function() {
+            const serviceId = this.getAttribute('data-id');
+            showServiceDetails(serviceId);
+          });
+        });
+
+      } catch (error) {
+        console.error('Error al cargar servicios:', error);
+        document.getElementById('servicesContainer').innerHTML = `
+          <div class="error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Error al cargar los servicios. Por favor, intenta nuevamente.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Mostrar detalles del servicio en modal
+    async function showServiceDetails(serviceId) {
+      try {
+        const serviceDoc = await db.collection('services').doc(serviceId).get();
+        
+        if (!serviceDoc.exists) {
+          alert('Servicio no encontrado');
+          return;
+        }
+
+        const service = serviceDoc.data();
+        const modal = document.getElementById('detailModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalDetails = document.getElementById('modalDetails');
+
+        modalTitle.textContent = service.title || 'Sin título';
+        modalIcon.className = `modal-icon ${service.icon || 'fas fa-spa'}`;
+        modalDetails.textContent = service.details || 'Sin información detallada disponible.';
+
+        modal.style.display = 'flex';
+
+        // Cerrar modal al hacer clic fuera del contenido
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.style.display = 'none';
+          }
+        });
+
+      } catch (error) {
+        console.error('Error al mostrar detalles:', error);
+        alert('Error al cargar los detalles del servicio');
+      }
+    }
+
+    // Evento para cerrar modal
+    document.getElementById('closeModal').addEventListener('click', function() {
+      document.getElementById('detailModal').style.display = 'none';
+    });
+
+    // Evento para botón de editar
+    document.getElementById('editBtn').addEventListener('click', function() {
+      window.location.href = 'editar-servicios.html';
+    });
+  </script>
+</body>
+</html>

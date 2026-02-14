@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meditación - ZenzAndRelax</title>
+  <link rel="icon" href="https://i.imgur.com/7XfLSeT.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #4B0082, #9370DB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #4B0082, #6A0DAD);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.3s;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .meditation-hero {
+      background: linear-gradient(135deg, rgba(75, 0, 130, 0.8), rgba(106, 13, 173, 0.85)), url('https://images.unsplash.com/photo-1545205597-406e140b31c3?w=1200&h=400&fit=crop');
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px;
+      padding: 60px 40px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .meditation-hero h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .meditation-hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .meditation-sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .meditation-sections {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .meditation-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .meditation-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .meditation-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+    }
+
+    .meditation-icon {
+      font-size: 2.5rem;
+      color: #9370DB;
+    }
+
+    .meditation-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .meditation-card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .benefits-list {
+      margin-top: 15px;
+    }
+
+    .benefits-list h3 {
+      font-size: 1.1rem;
+      color: #9370DB;
+      margin-bottom: 10px;
+    }
+
+    .benefits-list ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .benefits-list li {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .benefits-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .schedule-section {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+      margin-top: 20px;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .schedule-item {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid rgba(138, 43, 226, 0.2);
+    }
+
+    .schedule-item h4 {
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .schedule-item p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-moon"></i> Meditación Guiada</h1>
+      <p>Encuentra paz interior y claridad mental en nuestro espacio sagrado</p>
+    </header>
+
+    <div class="meditation-hero">
+      <h2>El Camino hacia la Paz Interior</h2>
+      <p>La meditación es una práctica antigua que nos permite conectar con nuestra esencia más profunda, calmar la mente y encontrar equilibrio en medio del caos diario. En ZenzAndRelax, te guiamos en este viaje transformador.</p>
+    </div>
+
+    <div class="meditation-sections">
+      <div class="meditation-card">
+        <div class="meditation-header">
+          <div class="meditation-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h2>Meditación Mindfulness</h2>
+        </div>
+        <p>Práctica de atención plena que te ayuda a vivir el presente con conciencia y aceptación, reduciendo el estrés y aumentando la claridad mental.</p>
+        <div class="benefits-list">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Reduce la ansiedad y el estrés</li>
+            <li>Mejora la concentración</li>
+            <li>Aumenta la autoconciencia</li>
+            <li>Promueve el bienestar emocional</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="meditation-card">
+        <div class="meditation-header">
+          <div class="meditation-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h2>Meditación de Amor Bondadoso</h2>
+        </div>
+        <p>Técnica que cultiva sentimientos de compasión y amor hacia uno mismo y hacia los demás, fortaleciendo las conexiones humanas y sanando heridas emocionales.</p>
+        <div class="benefits-list">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Desarrolla empatía</li>
+            <li>Reduce sentimientos de ira</li>
+            <li>Mejora relaciones interpersonales</li>
+            <li>Aumenta la autoestima</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="meditation-card">
+        <div class="meditation-header">
+          <div class="meditation-icon">
+            <i class="fas fa-spa"></i>
+          </div>
+          <h2>Meditación Transcendental</h2>
+        </div>
+        <p>Método que utiliza mantras para trascender el pensamiento ordinario y acceder a estados de conciencia más profundos y expansivos.</p>
+        <div class="benefits-list">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Profunda relajación</li>
+            <li>Reducción de la presión arterial</li>
+            <li>Mayor creatividad</li>
+            <li>Claridad mental</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="meditation-card">
+        <div class="meditation-header">
+          <div class="meditation-icon">
+            <i class="fas fa-mountain"></i>
+          </div>
+          <h2>Meditación Vipassana</h2>
+        </div>
+        <p>Antigua técnica de meditación que se enfoca en la observación de sensaciones físicas y mentales para desarrollar insight y liberación del sufrimiento.</p>
+        <div class="benefits-list">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Autoconocimiento profundo</li>
+            <li>Liberación de patrones negativos</li>
+            <li>Equilibrio emocional</li>
+            <li>Paz interior duradera</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="meditation-card">
+        <div class="meditation-header">
+          <div class="meditation-icon">
+            <i class="fas fa-music"></i>
+          </div>
+          <h2>Meditación con Sonido</h2>
+        </div>
+        <p>Utiliza frecuencias sonoras, cuencos tibetanos y música sagrada para inducir estados de relajación profunda y sanación vibracional.</p>
+        <div class="benefits-list">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Equilibrio de chakras</li>
+            <li>Reducción del dolor físico</li>
+            <li>Armonización energética</li>
+            <li>Estimulación de la curación</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="meditation-card">
+        <div class="meditation-header">
+          <div class="meditation-icon">
+            <i class="fas fa-bed"></i>
+          </div>
+          <h2>Meditación para Dormir</h2>
+        </div>
+        <p>Técnicas específicas diseñadas para calmar la mente antes de dormir, promoviendo un sueño reparador y profundo.</p>
+        <div class="benefits-list">
+          <h3>Beneficios:</h3>
+          <ul>
+            <li>Mejora la calidad del sueño</li>
+            <li>Reduce el insomnio</li>
+            <li>Calma la mente activa</li>
+            <li>Promueve la relajación nocturna</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="schedule-section">
+      <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 20px;">
+        <i class="fas fa-calendar-alt"></i> Horarios de Sesiones
+      </h2>
+      <div class="schedule-grid">
+        <div class="schedule-item">
+          <h4>Lunes</h4>
+          <p>10:00 AM - 11:00 AM</p>
+          <p>Mindfulness</p>
+        </div>
+        <div class="schedule-item">
+          <h4>Martes</h4>
+          <p>6:00 PM - 7:00 PM</p>
+          <p>Amor Bondadoso</p>
+        </div>
+        <div class="schedule-item">
+          <h4>Miércoles</h4>
+          <p>10:00 AM - 11:00 AM</p>
+          <p>Transcendental</p>
+        </div>
+        <div class="schedule-item">
+          <h4>Jueves</h4>
+          <p>6:00 PM - 7:00 PM</p>
+          <p>Sonido Sagrado</p>
+        </div>
+        <div class="schedule-item">
+          <h4>Viernes</h4>
+          <p>10:00 AM - 11:00 AM</p>
+          <p>Vipassana</p>
+        </div>
+        <div class="schedule-item">
+          <h4>Sábado</h4>
+          <p>9:00 AM - 10:30 AM</p>
+          <p>Sesión Extendida</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="zenzandrelax.html" class="back-btn" style="margin-top: 30px;">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCitpA4mXPQ967ow0le8Kr9HX26dAnKSM0",
+      authDomain: "zenzandrelax.firebaseapp.com",
+      projectId: "zenzandrelax",
+      storageBucket: "zenzandrelax.firebasestorage.app",
+      messagingSenderId: "109863701908",
+      appId: "1:109863701908:web:9223d4b23599eca7215381"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>
